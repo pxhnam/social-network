@@ -1,0 +1,13 @@
+.wrapper {
+	display: flex;
+	justify-content: flex-end;
+
+	.content {
+		max-width: 80%;
+		font-size: 13px;
+		line-height: 21px;
+		padding: 7px 12px;
+		border-radius: 20px;
+		background-color: #222222;
+	}
+}

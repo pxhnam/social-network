@@ -1,0 +1,80 @@
+.comment {
+	display: flex;
+	gap: 10px;
+
+	&-avatar {
+		height: 35px;
+		width: 35px;
+		border-radius: 50%;
+	}
+	&-info {
+		display: flex;
+		flex-direction: column;
+		flex: 1;
+
+		&__user {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+
+			.name {
+				color: #e1e3e6;
+				font-size: 12.5px;
+				font-weight: bold;
+				cursor: pointer;
+			}
+
+			.action {
+				width: 15px;
+				height: 15px;
+				color: #939393;
+				display: none;
+				cursor: pointer;
+			}
+		}
+
+		&__content {
+			color: #e1e3e6;
+			font-size: 13px;
+		}
+
+		&__others {
+			height: 18px;
+			display: flex;
+			align-items: center;
+			font-size: 12px;
+			color: #939393;
+			margin-top: 5px;
+			gap: 10px;
+
+			.space {
+				flex: 1;
+			}
+			.reply-content {
+				color: #71aaeb;
+				&:hover {
+					text-decoration: underline;
+					cursor: pointer;
+				}
+			}
+			.heart-icon {
+				height: 18px;
+				width: 18px;
+				display: none;
+				cursor: pointer;
+				user-select: none;
+				&:active {
+					transform: scale(1.05);
+				}
+			}
+		}
+	}
+	&:hover {
+		.heart-icon {
+			display: block;
+		}
+		.action {
+			display: inline-flex;
+		}
+	}
+}

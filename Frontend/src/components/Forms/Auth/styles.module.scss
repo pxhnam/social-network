@@ -1,0 +1,108 @@
+.overlay {
+	width: 100vw;
+	height: 100vh;
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	z-index: 15;
+	display: grid;
+	place-items: center;
+	transform: scale(0);
+	transition: transform 0.3s ease;
+	&.show {
+		transform: scale(1);
+	}
+	.wrapper {
+		position: relative;
+		width: 420px;
+		height: 480px;
+		background-color: transparent;
+		border: 2px solid #fff;
+		border-radius: 20px;
+		backdrop-filter: blur(20px);
+		box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		user-select: none;
+		transition: height 0.2s ease;
+		overflow: hidden;
+
+		.form.login {
+			transition: transform 0.18s ease;
+			transform: translateX(0);
+		}
+
+		.form.register {
+			position: absolute;
+			transition: none;
+			transform: translateX(400px);
+		}
+
+		&.active {
+			width: 480px;
+			height: 620px;
+
+			.login {
+				transition: none;
+				transform: translateX(-450px);
+			}
+			.register {
+				transition: transform 0.18s ease;
+				transform: translateX(0);
+			}
+		}
+
+		.icon-close {
+			width: 35px;
+			height: 35px;
+			position: absolute;
+			top: 0;
+			right: 0;
+			background-color: #fff;
+			color: #333;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			border-bottom-left-radius: 20px;
+			z-index: 16;
+
+			svg {
+				width: 20px;
+				height: 20px;
+				stroke-width: 2.5;
+				cursor: pointer;
+			}
+		}
+		.form {
+			width: 100%;
+			padding: 40px;
+
+			&-title {
+				font-size: 32px;
+				color: #fff;
+				text-align: center;
+				text-transform: uppercase;
+			}
+
+			&-account {
+				display: flex;
+				font-size: 13px;
+				justify-content: center;
+				gap: 5px;
+
+				.link {
+					color: #3e8be3;
+					font-weight: bold;
+					cursor: pointer;
+
+					&:hover {
+						text-decoration: underline;
+					}
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,22 @@
+.wrapper {
+	user-select: none;
+	ul {
+		width: auto;
+		min-width: 120px;
+		list-style: none;
+		font-size: 12px;
+		background-color: #222222;
+		border: 1px solid #2a2a2a;
+		border-radius: 3px;
+		padding: 1px;
+		z-index: 5;
+
+		li {
+			padding: 10px 15px;
+			border-radius: 3px;
+			&:hover {
+				background-color: #4a4a4a;
+			}
+		}
+	}
+}

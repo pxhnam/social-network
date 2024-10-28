@@ -1,0 +1,115 @@
+.form {
+	width: 100%;
+	padding: 40px;
+
+	.text-danger {
+		font-size: 15px;
+		text-align: center;
+		color: #cb4e4e;
+	}
+
+	&-input {
+		position: relative;
+		width: 100%;
+		height: 50px;
+		border-bottom: 1px solid #fff;
+		margin: 30px 0;
+		transition: 0.3s ease;
+
+		.icon-user,
+		.icon-lock,
+		.icon-eye {
+			width: 20px;
+			height: 20px;
+			position: absolute;
+			line-height: 57px;
+			color: #fff;
+		}
+		.icon-user,
+		.icon-lock {
+			left: 8px;
+		}
+		.icon-eye {
+			right: 8px;
+			cursor: pointer;
+		}
+
+		input {
+			height: 100%;
+			width: 100%;
+			background-color: transparent;
+			border: none;
+			outline: none;
+			font-size: 16px;
+			font-weight: 600;
+			color: #fff;
+			padding: 0 35px;
+		}
+
+		label {
+			position: absolute;
+			top: 50%;
+			left: 35px;
+			transform: translateY(-50%);
+			font-size: 16px;
+			color: #fff;
+			font-weight: 500;
+			pointer-events: none;
+			transition: 0.3s ease;
+		}
+
+		input:focus ~ label,
+		input:not(:placeholder-shown) ~ label {
+			top: -5px;
+			left: 10px;
+		}
+	}
+
+	&-others {
+		font-size: 13px;
+		color: #fff;
+		font-weight: 500;
+		margin: -15px 0 15px;
+		display: flex;
+		justify-content: space-between;
+
+		&__remember {
+			display: flex;
+			gap: 5px;
+
+			input {
+				accent-color: #fff;
+			}
+		}
+
+		a {
+			color: #3e8be3;
+			text-decoration: none;
+
+			&:hover {
+				text-decoration: underline;
+			}
+		}
+	}
+
+	&-button {
+		width: 100%;
+		height: 45px;
+		background-color: #fff;
+		border: none;
+		outline: none;
+		border-radius: 6px;
+		font-weight: bold;
+		color: #333;
+		font-size: 16px;
+		text-transform: uppercase;
+		cursor: pointer;
+
+		&.disabled {
+			background-color: #ffffff80;
+			color: #33333380;
+			cursor: not-allowed;
+			pointer-events: none;
+		}
+	}
+}

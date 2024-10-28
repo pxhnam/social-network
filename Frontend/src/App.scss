@@ -1,0 +1,90 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import '../src/styles/variables';
+
+:root {
+	--header-color: #222222;
+	--bg-color: #141414;
+	--text-color: #f0f0f0;
+	--bg-post: #222222;
+
+	--color-border-post: #353535;
+	--color-border-header: #353535;
+
+	--color-grey: #9b9b9b;
+	--color-link: #007bff;
+	--color-primary: #007bff;
+	--color-white: #141414;
+	--color-dark: #f0f0f0;
+	--color-danger: #9c3030;
+
+	--color-primary-rgb: 0, 123, 255;
+	--color-dark-rgb: 255, 255, 255;
+	--color-white-rgb: 51, 51, 51;
+
+	--bg-button-dark: #f0f0f0;
+	--hover-button-dark: #e9e9e9;
+	--bg-button-light: #1f2937;
+	--hover-button-light: #374151;
+
+	--color-action-active: #ff3347;
+	--bg-action: #333;
+	--color-action: #b2b2b2;
+	--bg-action-hover: #424242;
+	--bg-action-active: #3e2526;
+
+	--container-padding-horizontal: 320px;
+	--height-header: 70px;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: 'Montserrat', sans-serif;
+}
+
+body {
+	background-color: var(--bg-color);
+	color: var(--text-color);
+}
+
+a {
+	text-decoration: none;
+}
+
+.container {
+	padding: var(--height-header) var(--container-padding-horizontal) 15px;
+}
+@media (max-width: $breakpoint-xxxl) {
+	:root {
+		--container-padding-horizontal: 210px;
+	}
+}
+@media (max-width: $breakpoint-xxl) {
+	// :root {
+	// --container-padding-horizontal: 120px;
+	// }
+}
+@media (max-width: $breakpoint-xl) {
+	:root {
+		--container-padding-horizontal: 120px;
+	}
+}
+@media (max-width: $breakpoint-lg) {
+	:root {
+		--height-header: 150px;
+		--container-padding-horizontal: 120px;
+	}
+}
+
+@media (max-width: $breakpoint-md) {
+	:root {
+		--container-padding-horizontal: 80px;
+	}
+}
+
+@media (max-width: $breakpoint-sm) {
+	:root {
+		--container-padding-horizontal: 30px;
+	}
+}

@@ -1,0 +1,119 @@
+@import '../../styles/variables';
+
+.header {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	border-bottom: 1px solid var(--color-border-header);
+	background-color: var(--header-color);
+	padding: 1rem var(--container-padding-horizontal);
+	z-index: 10;
+
+	.nav {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+
+		&-logo {
+			font-size: 24px;
+			font-weight: bolder;
+			user-select: none;
+
+			a {
+				color: var(--color-dark);
+			}
+		}
+
+		&-links {
+			list-style: none;
+			display: flex;
+			gap: 50px;
+
+			&__item a {
+				position: relative;
+				color: var(--color-dark);
+				font-weight: bold;
+				transition: color 0.3s ease;
+
+				&:hover {
+					color: var(--color-link);
+				}
+				&::after {
+					content: '';
+					position: absolute;
+					height: 2px;
+					width: 0px;
+					background-color: var(--color-link);
+					bottom: -5px;
+					left: 50%;
+					transform: translateX(-50%);
+					border-radius: 12px;
+					transition: width 0.3s ease;
+				}
+				&.active::after {
+					width: 65%;
+				}
+			}
+		}
+
+		&-profile {
+			position: relative;
+			user-select: none;
+
+			&__info {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				cursor: pointer;
+
+				.avatar {
+					height: 35px;
+					margin-right: 5px;
+					border-radius: 50%;
+				}
+			}
+
+			&__menu {
+				width: 180px;
+				position: absolute;
+				// width: 80%;
+				top: 45px;
+				left: 50%;
+				transform: translateX(-50%);
+				font-size: 13px;
+				list-style: none;
+				padding: 5px;
+				border-radius: 5px;
+				border: 1px solid var(--color-border-header);
+				background-color: var(--header-color);
+				z-index: 12;
+
+				li {
+					cursor: pointer;
+					padding: 15px 30px;
+					border-radius: 5px;
+					display: flex;
+					gap: 10px;
+					align-items: center;
+
+					svg {
+						height: 21px;
+						width: 21px;
+					}
+
+					&:hover {
+						background-color: #4a4a4a;
+					}
+				}
+			}
+		}
+	}
+
+	@media (max-width: $breakpoint-lg) {
+		.nav {
+			flex-direction: column;
+			gap: 15px;
+		}
+	}
+}
