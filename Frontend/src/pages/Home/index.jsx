@@ -16,15 +16,6 @@ const HomePage = () => {
 	const [posts, setPosts] = useState([]);
 	const { ref, inView } = useInView();
 
-	useEffect(() => {
-		socket.on('test', () => {
-			console.log('test');
-		});
-		return () => {
-			socket.off('test');
-		};
-	}, [socket]);
-
 	const loadData = async (total, limit) => {
 		try {
 			const response = await postService.get(total, limit);

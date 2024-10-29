@@ -16,6 +16,14 @@ const AttachmentRepository = {
 			throw error;
 		}
 	},
+	remove: async (id) => {
+		try {
+			const att = await Attachment.findByIdAndDelete(id);
+			return att;
+		} catch (error) {
+			throw error;
+		}
+	},
 };
 
 export default AttachmentRepository;

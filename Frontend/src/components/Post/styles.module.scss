@@ -80,6 +80,7 @@
 			display: flex;
 			align-items: center;
 			gap: 10px;
+
 			.info-avatar {
 				height: 40px;
 				width: 40px;
@@ -128,6 +129,7 @@
 
 		&__edit {
 			width: 100%;
+
 			.form-edit {
 				width: 100%;
 				height: 120px;
@@ -140,6 +142,35 @@
 				border: 1px solid #353535;
 				background-color: transparent;
 			}
+
+			.form-media {
+				display: flex;
+				flex-wrap: wrap;
+				overflow: hidden;
+				gap: 5px;
+
+				&__file {
+					position: relative;
+
+					.close-icon {
+						position: absolute;
+						right: 0;
+						user-select: none;
+						cursor: pointer;
+						z-index: 1;
+						svg {
+							width: 15px;
+							height: 15px;
+						}
+					}
+					img,
+					video {
+						height: 120px;
+						border-radius: 3px;
+					}
+				}
+			}
+
 			.form-action {
 				display: flex;
 				gap: 5px;

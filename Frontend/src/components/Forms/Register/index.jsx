@@ -32,10 +32,6 @@ const RegisterForm = ({ onBack }) => {
 				);
 				setMessage('');
 				if (response.status) {
-					setFirstName('');
-					setLastName('');
-					setUsername('');
-					setPassword('');
 					onBack();
 					toast.success(response.message);
 				} else {

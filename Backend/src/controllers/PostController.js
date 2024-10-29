@@ -50,11 +50,17 @@ class PostController {
 
 	Update = async (req, res) => {
 		try {
-			const { id, content } = req.body;
+			const { id, content, _files } = req.body;
 			const userId = req.currentUserId;
 			const attachments = req.files;
 
-			const result = await Post.update(userId, id, content, attachments);
+			const result = await Post.update(
+				userId,
+				id,
+				content,
+				attachments,
+				_files
+			);
 
 			return res.json(result);
 		} catch (error) {
@@ -83,7 +89,7 @@ class PostController {
 			const { id } = req.params;
 			const userId = req.currentUserId;
 
-			const result = await Post.remove(userId, id);
+			const result = await Post.remove(id, userId);
 
 			return res.json(result);
 		} catch (error) {

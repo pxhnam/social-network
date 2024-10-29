@@ -29,7 +29,6 @@ const PostService = {
 					username: post.user.username,
 					name: post.user.first_name + ' ' + post.user.last_name,
 				},
-				isAuth: userId ? userId.toString() === post.user._id.toString() : false,
 				content: post.content,
 				isLiked: userId ? post.isLiked(userId) : false,
 				likeCount: post.getLikeCount(),
@@ -46,7 +45,7 @@ const PostService = {
 			throw error;
 		}
 	},
-	update: async (userId, postId, content, attachments) => {
+	update: async (userId, postId, content, attachments, _files) => {
 		try {
 			if (postId) {
 				const isAuthor = await Post.isAuthor(userId, postId);
@@ -71,7 +70,6 @@ const PostService = {
 			} else {
 				attachments = [];
 			}
-
 			attachments = await Attachment.createMany(attachments);
 
 			if (postId) {
@@ -81,6 +79,15 @@ const PostService = {
 					attachments.map((att) => att._id)
 				);
 				if (post) {
+					if (_files) {
+						_files = JSON.parse(_files);
+						if (Array.isArray(_files) && _files?.length > 0) {
+							post.attachments = post.attachments.filter(
+								(id) => !_files.includes(id.toString())
+							);
+						}
+					}
+					await post.save();
 					return response.success('Post edited successfully');
 				}
 			} else {
@@ -110,7 +117,7 @@ const PostService = {
 			throw error;
 		}
 	},
-	remove: async (userId, postId) => {
+	remove: async (postId, userId) => {
 		try {
 			const isAuthor = await Post.isAuthor(userId, postId);
 			if (isAuthor) {

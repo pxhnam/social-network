@@ -38,11 +38,24 @@ const PostRepository = {
 			const post = await Post.findById(id)
 				.populate('user')
 				.populate('attachments');
-			return post || null;
+			return post;
 		} catch (error) {
 			throw error;
 		}
 	},
+
+	getPostByAttachmentId: async (attId) => {
+		try {
+			const post = await Post.findOne({
+				// attachments: { $in: [attId] },
+				attachments: attId,
+			});
+			return post;
+		} catch (error) {
+			throw error;
+		}
+	},
+
 	create: async (user, content, attachments = []) => {
 		try {
 			const post = new Post({

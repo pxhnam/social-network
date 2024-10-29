@@ -9,7 +9,7 @@ const cls = classNames.bind(styles);
 
 const CreatePost = ({ avatar }) => {
 	const [text, setText] = useState('');
-	const [images, setImages] = useState([]);
+	const [media, setMedia] = useState([]);
 	const textareaRef = useRef(null);
 
 	useEffect(() => {
@@ -20,11 +20,11 @@ const CreatePost = ({ avatar }) => {
 
 	useEffect(() => {
 		return () => {
-			images.forEach((image) => {
-				URL.revokeObjectURL(image.preview);
+			media.map((file) => {
+				URL.revokeObjectURL(file.preview);
 			});
 		};
-	}, [images]);
+	}, [media]);
 
 	const handlePreviewImages = (e) => {
 		const files = Array.from(e.target.files);
@@ -33,7 +33,7 @@ const CreatePost = ({ avatar }) => {
 			return file;
 		});
 		e.target.value = null;
-		setImages(previewImages);
+		setMedia(previewImages);
 	};
 
 	const submit = async () => {
@@ -41,15 +41,15 @@ const CreatePost = ({ avatar }) => {
 			try {
 				const formData = new FormData();
 				formData.append('content', text);
-				images.forEach((image) => {
-					formData.append('attachments', image);
+				media.map((file) => {
+					formData.append('attachments', file);
 				});
 				const response = await postService.create(formData);
 
 				if (response.status) {
 					console.log(response);
 					setText('');
-					setImages([]);
+					setMedia([]);
 					toast.success(response.message);
 				}
 			} catch (error) {
@@ -71,11 +71,15 @@ const CreatePost = ({ avatar }) => {
 					placeholder='What do you thing?'
 				></textarea>
 			</div>
-			{images.length > 0 && (
+			{media.length > 0 && (
 				<div className={cls('box-preview')}>
-					{images.map((image) => (
-						<img key={image.name} src={image.preview} alt={image.name} />
-					))}
+					{media.map((file) =>
+						file.type.includes('image') ? (
+							<img key={file.name} src={file.preview} alt={file.name} />
+						) : (
+							<video key={file.name} src={file.preview} controls />
+						)
+					)}
 				</div>
 			)}
 			<div className={cls('box-action')}>
@@ -87,7 +91,7 @@ const CreatePost = ({ avatar }) => {
 						type='file'
 						id='input-images'
 						className={cls('input-images')}
-						accept='image/*'
+						accept='image/*,video/*'
 						onChange={handlePreviewImages}
 						multiple
 					/>

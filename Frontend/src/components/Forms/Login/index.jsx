@@ -23,8 +23,6 @@ const LoginForm = () => {
 				if (response.status) {
 					setAuth(response.data);
 					setMessage('');
-					setUsername('');
-					setPassword('');
 					setOpenAuthForm(false);
 					toast.success(response.message);
 				} else {
