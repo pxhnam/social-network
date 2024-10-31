@@ -18,7 +18,7 @@ import MediaSlider from '../MediaSlider';
 import DropdownMenu from '../DropdownMenu';
 import toast from 'react-hot-toast';
 
-const cls = classNames.bind(styles);
+const cx = classNames.bind(styles);
 
 const Post = ({ object }) => {
 	const LIMIT = 10;
@@ -147,7 +147,7 @@ const Post = ({ object }) => {
 	};
 
 	const handleMouseDown = (e) => {
-		if (e.target.classList.contains(cls('overlay'))) {
+		if (e.target.classList.contains(cx('overlay'))) {
 			setOverlayClick(true);
 		} else {
 			setOverlayClick(false);
@@ -283,46 +283,46 @@ const Post = ({ object }) => {
 	return (
 		init && (
 			<div
-				className={cls({ overlay: isFloating })}
+				className={cx({ overlay: isFloating })}
 				onMouseDown={handleMouseDown}
 				onMouseUp={handleMouseUp}
 			>
 				<div
-					className={cls('post', { modal: isFloating })}
+					className={cx('post', { modal: isFloating })}
 					onClick={(e) => e.stopPropagation()}
 				>
 					{isFloating && (
-						<div className={cls('modal-header')}>
-							<span className={cls('title')}>{post.author.name}'s article</span>
+						<div className={cx('modal-header')}>
+							<span className={cx('title')}>{post.author.name}'s article</span>
 							<span
-								className={cls('btn-close')}
+								className={cx('btn-close')}
 								onClick={() => setIsFloating(false)}
 							>
 								<CloseIcon />
 							</span>
 						</div>
 					)}
-					<div className={cls('post-info')}>
-						<div className={cls('post-info__details')}>
+					<div className={cx('post-info')}>
+						<div className={cx('post-info__details')}>
 							<img
-								className={cls('info-avatar')}
+								className={cx('info-avatar')}
 								src={post.author.avatar}
 								alt='avatar'
 							/>
-							<div className={cls('info-details')}>
+							<div className={cx('info-details')}>
 								<Link
 									to={'/profile/' + post.author.username}
-									className={cls('info-details__name')}
+									className={cx('info-details__name')}
 								>
 									{post.author.name}
 								</Link>
-								<span className={cls('info-details__time')}>
+								<span className={cx('info-details__time')}>
 									{post.createdAt}
 								</span>
 							</div>
 						</div>
 						{auth?.username === post.author.username && (
-							<div className={cls('post-info__action')} ref={menuPostRef}>
+							<div className={cx('post-info__action')} ref={menuPostRef}>
 								<span onClick={toggleDropdown}>
 									<EllipsisIcon />
 								</span>
@@ -335,24 +335,24 @@ const Post = ({ object }) => {
 							</div>
 						)}
 					</div>
-					<div className={cls('post-content')}>
+					<div className={cx('post-content')}>
 						{isEditing ? (
-							<div className={cls('post-content__edit')}>
+							<div className={cx('post-content__edit')}>
 								<textarea
 									defaultValue={newStatus}
-									className={cls('form-edit')}
+									className={cx('form-edit')}
 									placeholder='Editing status'
 									onChange={(e) => {
 										setNewStatus(e.target.value);
 									}}
 								></textarea>
-								<div className={cls('form-media')}>
+								<div className={cx('form-media')}>
 									{tempFiles.map(
 										(file) =>
 											!file.isDelete && (
-												<div className={cls('form-media__file')} key={file._id}>
+												<div className={cx('form-media__file')} key={file._id}>
 													<span
-														className={cls('close-icon')}
+														className={cx('close-icon')}
 														onClick={() => handleRemoveFile(file._id)}
 													>
 														<CloseIcon />
@@ -366,32 +366,32 @@ const Post = ({ object }) => {
 											)
 									)}
 								</div>
-								<div className={cls('form-action')}>
-									<button className={cls('btn-cancel')} onClick={onCancelEdit}>
+								<div className={cx('form-action')}>
+									<button className={cx('btn-cancel')} onClick={onCancelEdit}>
 										Cancel
 									</button>
-									<button className={cls('btn-save')} onClick={onSaveEdit}>
+									<button className={cx('btn-save')} onClick={onSaveEdit}>
 										Save
 									</button>
 								</div>
 							</div>
 						) : (
-							<p className={cls('post-content__article')}>{post.content}</p>
+							<p className={cx('post-content__article')}>{post.content}</p>
 						)}
 						{post.attachments?.length > 0 && (
-							<div className={cls('post-content__media')}>
+							<div className={cx('post-content__media')}>
 								<MediaSlider attachments={post.attachments} />
 							</div>
 						)}
 					</div>
-					<div className={cls('post-actions')}>
+					<div className={cx('post-actions')}>
 						<div
-							className={cls('post-actions__reaction', {
+							className={cx('post-actions__reaction', {
 								active: post.isLiked,
 							})}
 							onClick={toggleLike}
 						>
-							<span className={cls('heart-icon')}>
+							<span className={cx('heart-icon')}>
 								{post.isLiked ? (
 									<svg
 										xmlns='http://www.w3.org/2000/svg'
@@ -426,40 +426,40 @@ const Post = ({ object }) => {
 							</span>
 
 							{post.likeCount > 0 && (
-								<span className={cls('count-like')}>{post.likeCount}</span>
+								<span className={cx('count-like')}>{post.likeCount}</span>
 							)}
 						</div>
 						<div
-							className={cls('post-actions__reaction')}
+							className={cx('post-actions__reaction')}
 							onClick={handleOpenComment}
 						>
 							<span>
 								<CommentIcon width='23px' height='23px' />
 							</span>
 							{commentCount > 0 && (
-								<span className={cls('count-comment')}>{commentCount}</span>
+								<span className={cx('count-comment')}>{commentCount}</span>
 							)}
 						</div>
-						<div className={cls('post-actions__reaction')}>
+						<div className={cx('post-actions__reaction')}>
 							<span>
 								<ShareIcon />
 							</span>
 						</div>
 					</div>
 
-					{comments?.length > 0 && <div className={cls('separator')}></div>}
+					{comments?.length > 0 && <div className={cx('separator')}></div>}
 					{comments?.length > 0 && (
-						<div className={cls('box-comments')}>
+						<div className={cx('box-comments')}>
 							{comments?.length > 3 &&
 								(!isFloating || comments?.length < commentCount) && (
-									<div className={cls('more-comments')}>
+									<div className={cx('more-comments')}>
 										<span
-											className={cls('btn-more')}
+											className={cx('btn-more')}
 											onClick={handleMoreComments}
 										>
 											Xem thêm
 										</span>
-										{isLoading && <span className={cls('loader')}></span>}
+										{isLoading && <span className={cx('loader')}></span>}
 									</div>
 								)}
 
@@ -479,11 +479,11 @@ const Post = ({ object }) => {
 					)}
 
 					{auth && isComment && (
-						<div className={cls('box-comment')}>
-							<img src={auth.avatar} alt='avatar' className={cls('avatar')} />
+						<div className={cx('box-comment')}>
+							<img src={auth.avatar} alt='avatar' className={cx('avatar')} />
 							<input
 								type='text'
-								className={cls('input-comment')}
+								className={cx('input-comment')}
 								placeholder='Write comment'
 								ref={inputCommentRef}
 								onKeyDown={handleKeyDown}
@@ -492,7 +492,7 @@ const Post = ({ object }) => {
 									setComment(e.target.value);
 								}}
 							/>
-							<button className={cls('button-comment')} onClick={onComment}>
+							<button className={cx('button-comment')} onClick={onComment}>
 								<SendIcon />
 							</button>
 						</div>

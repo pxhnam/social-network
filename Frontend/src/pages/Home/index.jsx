@@ -7,7 +7,7 @@ import { AuthContext } from '~/context/AuthProvider';
 import CreatePost from '~/components/CreatePost';
 import postService from '~/services/PostService';
 
-const cls = classNames.bind(styles);
+const cx = classNames.bind(styles);
 
 const HomePage = () => {
 	const LIMIT = 10;
@@ -41,15 +41,15 @@ const HomePage = () => {
 	}, [inView]);
 
 	return (
-		<div className={cls('wrapper')}>
+		<div className={cx('wrapper')}>
 			{auth && <CreatePost avatar={auth.avatar} />}
 			{posts.map((post) => (
 				<Post key={post._id} object={post} />
 			))}
 			<span ref={ref}></span>
 			{loading && (
-				<div className={cls('box-loader')}>
-					<span className={cls('loader')}></span>
+				<div className={cx('box-loader')}>
+					<span className={cx('loader')}></span>
 				</div>
 			)}
 		</div>

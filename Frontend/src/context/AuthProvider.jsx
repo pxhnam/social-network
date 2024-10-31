@@ -14,22 +14,25 @@ const AuthProvider = ({ children }) => {
 	const [onlineUsers, setOnlineUsers] = useState([]);
 	const [loading, setLoading] = useState(true);
 
+	const validateToken = async () => {
+		try {
+			const { status, data } = await userService.profile();
+			setAuth(status === true ? data : null);
+		} catch (error) {
+			setAuth(null);
+		} finally {
+			setLoading(false);
+		}
+	};
+
 	useEffect(() => {
-		(async () => {
-			try {
-				const { status, data } = await userService.profile();
-				setAuth(status === true ? data : null);
-			} catch (error) {
-				setAuth(null);
-			} finally {
-				setLoading(false);
-			}
-		})();
+		validateToken();
 	}, []);
 
 	useEffect(() => {
 		const newSocket = io(SOCKET_URL);
 		setSocket(newSocket);
+
 		return () => {
 			newSocket.disconnect();
 		};

@@ -8,7 +8,7 @@ import { publicRoutes } from '~/routes';
 import styles from './styles.module.scss';
 import { ChevronDownIcon } from '~/components/Icons';
 
-const cls = classNames.bind(styles);
+const cx = classNames.bind(styles);
 
 function Header() {
 	const { auth, setAuth, setOpenAuthForm } = useContext(AuthContext);
@@ -58,21 +58,21 @@ function Header() {
 		}
 	};
 	return (
-		<header className={cls('header')}>
-			<nav className={cls('nav')}>
+		<header className={cx('header')}>
+			<nav className={cx('nav')}>
 				{/* Logo */}
-				<div className={cls('nav-logo')}>
+				<div className={cx('nav-logo')}>
 					<Link to='/'>LOR</Link>
 				</div>
 				{/* Navigation Links */}
-				<ul className={cls('nav-links')}>
+				<ul className={cx('nav-links')}>
 					{publicRoutes.map(
 						(route, index) =>
 							route.name && (
-								<li className={cls('nav-links__item')} key={index}>
+								<li className={cx('nav-links__item')} key={index}>
 									<NavLink
 										to={'/' + route.path}
-										className={({ isActive }) => cls({ active: isActive })}
+										className={({ isActive }) => cx({ active: isActive })}
 										onClick={route.auth ? handleAuth : undefined}
 									>
 										{route.name}
@@ -83,19 +83,19 @@ function Header() {
 				</ul>
 				{/* Navigation Links */}
 				{auth ? (
-					<div className={cls('nav-profile')} ref={menuRef}>
+					<div className={cx('nav-profile')} ref={menuRef}>
 						<div
-							className={cls('nav-profile__info')}
+							className={cx('nav-profile__info')}
 							onClick={toggleMenuProfile}
 						>
 							{auth.avatar && (
-								<img src={auth.avatar} alt='avatar' className={cls('avatar')} />
+								<img src={auth.avatar} alt='avatar' className={cx('avatar')} />
 							)}
 							<span>{auth?.name || ''}</span>
 							<ChevronDownIcon width='17px' height='17px' />
 						</div>
 						{isShow && (
-							<ul className={cls('nav-profile__menu')}>
+							<ul className={cx('nav-profile__menu')}>
 								<li>
 									<svg
 										xmlns='http://www.w3.org/2000/svg'
@@ -132,8 +132,8 @@ function Header() {
 						)}
 					</div>
 				) : (
-					<ul className={cls('nav-links')}>
-						<li className={cls('nav-links__item')}>
+					<ul className={cx('nav-links')}>
+						<li className={cx('nav-links__item')}>
 							<NavLink
 								to='/login'
 								onClick={(e) => {

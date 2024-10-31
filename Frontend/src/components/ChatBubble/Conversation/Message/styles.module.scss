@@ -1,0 +1,36 @@
+.left,
+.right {
+	display: flex;
+	align-items: center;
+	gap: 5px;
+
+	p {
+		width: fit-content;
+		max-width: 80%;
+		padding: 7px 12px;
+		border-radius: 3px;
+		text-align: justify;
+		background-color: #222222;
+	}
+	span {
+		width: 17px;
+		height: 17px;
+		color: #999;
+		opacity: 0;
+		transition: opacity 0.3s ease;
+		cursor: pointer;
+		user-select: none;
+	}
+
+	&:hover {
+		span {
+			opacity: 1;
+		}
+	}
+}
+.left {
+	justify-content: start;
+}
+.right {
+	justify-content: end;
+}

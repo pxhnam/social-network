@@ -5,7 +5,7 @@ import styles from './styles.module.scss';
 import postService from '~/services/PostService';
 import { ImageIcon, SendIcon } from '../Icons';
 
-const cls = classNames.bind(styles);
+const cx = classNames.bind(styles);
 
 const CreatePost = ({ avatar }) => {
 	const [text, setText] = useState('');
@@ -61,8 +61,8 @@ const CreatePost = ({ avatar }) => {
 	};
 
 	return (
-		<div className={cls('wrapper')}>
-			<div className={cls('box-input')}>
+		<div className={cx('wrapper')}>
+			<div className={cx('box-input')}>
 				<img src={avatar} alt='' />
 				<textarea
 					ref={textareaRef}
@@ -72,7 +72,7 @@ const CreatePost = ({ avatar }) => {
 				></textarea>
 			</div>
 			{media.length > 0 && (
-				<div className={cls('box-preview')}>
+				<div className={cx('box-preview')}>
 					{media.map((file) =>
 						file.type.includes('image') ? (
 							<img key={file.name} src={file.preview} alt={file.name} />
@@ -82,15 +82,15 @@ const CreatePost = ({ avatar }) => {
 					)}
 				</div>
 			)}
-			<div className={cls('box-action')}>
-				<div className={cls('upload-images')}>
+			<div className={cx('box-action')}>
+				<div className={cx('upload-images')}>
 					<label htmlFor='input-images'>
 						<ImageIcon />
 					</label>
 					<input
 						type='file'
 						id='input-images'
-						className={cls('input-images')}
+						className={cx('input-images')}
 						accept='image/*,video/*'
 						onChange={handlePreviewImages}
 						multiple

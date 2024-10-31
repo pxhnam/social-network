@@ -3,7 +3,7 @@ import classNames from 'classnames/bind';
 import ModalLayout from '../Layout';
 import styles from './styles.module.scss';
 
-const cls = classNames.bind(styles);
+const cx = classNames.bind(styles);
 
 const CreateRoom = ({ state, setState }) => {
 	const [avatar, setAvatar] = useState();
@@ -41,9 +41,9 @@ const CreateRoom = ({ state, setState }) => {
 
 	return (
 		<ModalLayout state={state} setState={setState}>
-			<form className={cls('form')} onSubmit={handleSubmit}>
-				<h2 className={cls('form-title')}>Tạo Nhóm</h2>
-				<div className={cls('form-avatar')}>
+			<form className={cx('form')} onSubmit={handleSubmit}>
+				<h2 className={cx('form-title')}>Tạo Nhóm</h2>
+				<div className={cx('form-avatar')}>
 					<label htmlFor='group-avatar'>
 						<input type='file' id='group-avatar' onChange={handleUpload} />
 					</label>
@@ -55,16 +55,16 @@ const CreateRoom = ({ state, setState }) => {
 						alt='avatar group'
 					/>
 				</div>
-				<div className={cls('form-input')}>
+				<div className={cx('form-input')}>
 					<input type='text' id='group-name' placeholder='' />
 					<label htmlFor='group-name'>Tên Nhóm</label>
 				</div>
 				{members.length > 0 && (
-					<div className={cls('form-members')}>
+					<div className={cx('form-members')}>
 						Thành viên: {members.join(', ')}
 					</div>
 				)}
-				<div className={cls('form-input')}>
+				<div className={cx('form-input')}>
 					<input
 						type='text'
 						id='member-name'

@@ -1,7 +1,7 @@
 import classNames from 'classnames/bind';
 import styles from './styles.module.scss';
 
-const cls = classNames.bind(styles);
+const cx = classNames.bind(styles);
 
 const Button = ({
 	text = '',
@@ -13,7 +13,7 @@ const Button = ({
 	uppercase,
 	disabled,
 }) => {
-	const classes = cls('button', {
+	const classes = cx('button', {
 		primary,
 		dark,
 		light,

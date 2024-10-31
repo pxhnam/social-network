@@ -3,7 +3,7 @@ import classNames from 'classnames/bind';
 import styles from './styles.module.scss';
 import { ChevronRightIcon, ChevronLeftIcon } from '../Icons';
 
-const cls = classNames.bind(styles);
+const cx = classNames.bind(styles);
 
 const MediaSlider = ({ attachments = [] }) => {
 	const [index, setIndex] = useState(0);
@@ -42,9 +42,9 @@ const MediaSlider = ({ attachments = [] }) => {
 	};
 
 	return (
-		<div className={cls('wrapper')}>
+		<div className={cx('wrapper')}>
 			{max > 0 && index !== 0 && (
-				<span className={cls('btn-back')} onClick={back}>
+				<span className={cx('btn-back')} onClick={back}>
 					<ChevronLeftIcon />
 				</span>
 			)}
@@ -66,14 +66,14 @@ const MediaSlider = ({ attachments = [] }) => {
 				);
 			})}
 			{max > 0 && (
-				<ul className={cls('page')}>
+				<ul className={cx('page')}>
 					{Array.from({ length: max + 1 }).map((_, i) => (
-						<li key={i} className={cls({ active: i === index })}></li>
+						<li key={i} className={cx({ active: i === index })}></li>
 					))}
 				</ul>
 			)}
 			{max > 0 && index < max && (
-				<span className={cls('btn-next')} onClick={next}>
+				<span className={cx('btn-next')} onClick={next}>
 					<ChevronRightIcon />
 				</span>
 			)}

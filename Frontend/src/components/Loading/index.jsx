@@ -1,7 +1,7 @@
 import classNames from 'classnames/bind';
 import axios from 'axios';
+import ReactDOM from 'react-dom';
 import { useContext, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '~/context/AuthProvider';
 
 import styles from './loading.module.scss';
@@ -9,9 +9,8 @@ import styles from './loading.module.scss';
 const cx = classNames.bind(styles);
 
 const Loading = () => {
-	const { setOpenAuthForm } = useContext(AuthContext);
+	const { setAuth, setOpenAuthForm } = useContext(AuthContext);
 	const [loading, setLoading] = useState(false);
-	const navigate = useNavigate();
 
 	axios.interceptors.request.use(
 		(config) => {
@@ -31,14 +30,19 @@ const Loading = () => {
 		},
 		(error) => {
 			if (error.response && error.response.status === 401) {
+				setAuth(null);
 				setOpenAuthForm(true);
 				return;
 			}
+			console.log(401);
 			setLoading(false);
 			return Promise.reject(error);
 		}
 	);
-	return <div className={cx('loading-top', { show: loading })}></div>;
+	return ReactDOM.createPortal(
+		<div className={cx('loading-top', { show: loading })}></div>,
+		document.body
+	);
 };
 
 export default Loading;

@@ -1,0 +1,39 @@
+.sidebar {
+	width: 35%;
+	display: flex;
+	flex-direction: column;
+	border-right: 1px solid #222222;
+
+	&-header {
+		padding: 10px 20px;
+
+		.form-input {
+			display: flex;
+			align-items: center;
+			gap: 10px;
+			padding: 5px 10px;
+			border: 1px solid #353535;
+
+			svg {
+				height: 17px;
+				width: 17px;
+				flex-shrink: 0;
+				stroke: #999;
+			}
+			input {
+				min-width: 0;
+				font-size: 15px;
+				color: #fff;
+				outline: none;
+				border: none;
+				background-color: transparent;
+			}
+		}
+	}
+
+	.list {
+		display: flex;
+		flex-direction: column;
+		overflow-y: auto;
+	}
+}

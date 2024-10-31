@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import classNames from 'classnames/bind';
 import styles from './styles.module.scss';
 
-const cls = classNames.bind(styles);
+const cx = classNames.bind(styles);
 
 const DropdownMenu = ({ state, setState, reference, menu = [] }) => {
 	const [style, setStyle] = useState({});
@@ -45,8 +45,8 @@ const DropdownMenu = ({ state, setState, reference, menu = [] }) => {
 
 	return state && menu.length > 0
 		? ReactDOM.createPortal(
-				<div className={cls('wrapper')} style={style} ref={dropdownRef}>
-					<ul className={cls({ open: state })}>
+				<div className={cx('wrapper')} style={style} ref={dropdownRef}>
+					<ul className={cx({ open: state })}>
 						{menu.map((item, index) => (
 							<li key={index} onClick={item.onClick}>
 								{item.name}

@@ -16,8 +16,14 @@ import LockIcon from './LockIcon';
 import UserIcon from './UserIcon';
 import ShowIcon from './ShowIcon';
 import HideIcon from './HideIcon';
+import ChatBubbleIcon from './ChatBubbleIcon';
+import FaceSmileIcon from './FaceSmileIcon';
+import LaptopIcon from './LaptopIcon';
 
 export {
+	LaptopIcon,
+	FaceSmileIcon,
+	ChatBubbleIcon,
 	LockIcon,
 	HideIcon,
 	ShowIcon,

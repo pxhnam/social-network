@@ -2,13 +2,17 @@ const ImageIcon = () => {
 	return (
 		<svg
 			xmlns='http://www.w3.org/2000/svg'
+			fill='none'
 			viewBox='0 0 24 24'
-			fill='currentColor'
-			strokeWidth={1}
+			strokeWidth='1.5'
+			stroke='currentColor'
+			className='size-6'
 		>
-			<path d='M4 5h13v7h2V5c0-1.103-.897-2-2-2H4c-1.103 0-2 .897-2 2v12c0 1.103.897 2 2 2h8v-2H4V5z'></path>
-			<path d='m8 11-3 4h11l-4-6-3 4z'></path>
-			<path d='M19 14h-2v3h-3v2h3v3h2v-3h3v-2h-3z'></path>
+			<path
+				strokeLinecap='round'
+				strokeLinejoin='round'
+				d='m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z'
+			/>
 		</svg>
 	);
 };

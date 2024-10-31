@@ -5,7 +5,7 @@ import userService from '~/services/UserService';
 import styles from './styles.module.scss';
 import { HideIcon, LockIcon, ShowIcon, UserIcon } from '~/components/Icons';
 
-const cls = classNames.bind(styles);
+const cx = classNames.bind(styles);
 
 const RegisterForm = ({ onBack }) => {
 	const [isShow, setIsShow] = useState(false);
@@ -45,14 +45,14 @@ const RegisterForm = ({ onBack }) => {
 
 	return (
 		<form
-			className={cls('form')}
+			className={cx('form')}
 			action=''
 			autoComplete='off'
 			onSubmit={handleSubmit}
 		>
-			{message && <p className={cls('text-danger')}>{message}</p>}
-			<div className={cls('form-input')}>
-				<span className={cls('icon-user')}>
+			{message && <p className={cx('text-danger')}>{message}</p>}
+			<div className={cx('form-input')}>
+				<span className={cx('icon-user')}>
 					<UserIcon />
 				</span>
 				<input
@@ -63,8 +63,8 @@ const RegisterForm = ({ onBack }) => {
 				/>
 				<label htmlFor='first_name'>First Name</label>
 			</div>
-			<div className={cls('form-input')}>
-				<span className={cls('icon-user')}>
+			<div className={cx('form-input')}>
+				<span className={cx('icon-user')}>
 					<UserIcon />
 				</span>
 				<input
@@ -75,8 +75,8 @@ const RegisterForm = ({ onBack }) => {
 				/>
 				<label htmlFor='last_name'>Last Name</label>
 			</div>
-			<div className={cls('form-input')}>
-				<span className={cls('icon-user')}>
+			<div className={cx('form-input')}>
+				<span className={cx('icon-user')}>
 					<UserIcon />
 				</span>
 				<input
@@ -87,8 +87,8 @@ const RegisterForm = ({ onBack }) => {
 				/>
 				<label htmlFor='username'>Username</label>
 			</div>
-			<div className={cls('form-input')}>
-				<span className={cls('icon-lock')}>
+			<div className={cx('form-input')}>
+				<span className={cx('icon-lock')}>
 					<LockIcon />
 				</span>
 				<input
@@ -98,13 +98,13 @@ const RegisterForm = ({ onBack }) => {
 					placeholder=''
 				/>
 				<label htmlFor='password'>Password</label>
-				<span className={cls('icon-eye')} onClick={() => setIsShow(!isShow)}>
+				<span className={cx('icon-eye')} onClick={() => setIsShow(!isShow)}>
 					{isShow ? <HideIcon /> : <ShowIcon />}
 				</span>
 			</div>
 			<button
 				type='submit'
-				className={cls(
+				className={cx(
 					'form-button',
 					username.trim() &&
 						password.trim() &&

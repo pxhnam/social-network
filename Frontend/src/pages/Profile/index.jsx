@@ -9,7 +9,7 @@ import chatService from '~/services/ChatService';
 import CreatePost from '~/components/CreatePost';
 import Post from '~/components/Post';
 
-const cls = classNames.bind(styles);
+const cx = classNames.bind(styles);
 
 const ProfilePage = () => {
 	const { auth } = useContext(AuthContext);
@@ -67,26 +67,26 @@ const ProfilePage = () => {
 	};
 
 	return loading ? null : user ? (
-		<div className={cls('wrapper')}>
-			<div className={cls('box-profile')}>
-				<div className={cls('box-profile__cover')}></div>
-				<div className={cls('box-profile__info')}>
+		<div className={cx('wrapper')}>
+			<div className={cx('box-profile')}>
+				<div className={cx('box-profile__cover')}></div>
+				<div className={cx('box-profile__info')}>
 					<img
 						src={user?.avatar}
 						alt='avatar'
-						className={cls('profile-avatar')}
+						className={cx('profile-avatar')}
 					/>
-					<div className={cls('profile-identity')}>
+					<div className={cx('profile-identity')}>
 						<p>{user.first_name + ' ' + user.last_name}</p>
 						<span>{user.followerCount} followers</span>
 					</div>
-					<div className={cls('profile-action')}>
+					<div className={cx('profile-action')}>
 						{user.itsme || (
 							<>
-								<button className={cls('btn-follow')} onClick={onFollow}>
+								<button className={cx('btn-follow')} onClick={onFollow}>
 									{user.isFollowing ? 'Unfollow' : 'Follow'}
 								</button>
-								<button className={cls('btn-inbox')} onClick={onChat}>
+								<button className={cx('btn-inbox')} onClick={onChat}>
 									Inbox
 								</button>
 							</>
@@ -95,7 +95,7 @@ const ProfilePage = () => {
 				</div>
 			</div>
 			{user.itsme && <CreatePost avatar={auth.avatar} />}
-			<div className={cls('posts')}>
+			<div className={cx('posts')}>
 				{posts && posts.length > 0 ? (
 					posts.map((post) => <Post key={post._id} object={post} auth={auth} />)
 				) : (

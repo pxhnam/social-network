@@ -5,7 +5,10 @@ import { publicRoutes, privateRoutes } from '~/routes';
 import AuthForm from './components/Forms/Auth';
 import Layouts from '~/layouts';
 import Loading from '~/components/Loading';
+
 import '~/App.scss';
+import ChatBubble from './components/ChatBubble';
+import ChatProvider from './context/ChatProvider';
 
 const App = () => {
 	return (
@@ -59,6 +62,9 @@ const App = () => {
 						}
 					/>
 				</Routes>
+				<ChatProvider>
+					<ChatBubble />
+				</ChatProvider>
 			</BrowserRouter>
 			<AuthForm />
 			<Toaster position='top-center' reverseOrder={true} />

@@ -6,7 +6,7 @@ import styles from './styles.module.scss';
 import { LoginForm, RegisterForm } from '..';
 import { CloseIcon } from '~/components/Icons';
 
-const cls = classNames.bind(styles);
+const cx = classNames.bind(styles);
 
 const AuthForm = () => {
 	const { auth, isOpen, setOpenAuthForm } = useContext(AuthContext);
@@ -14,7 +14,7 @@ const AuthForm = () => {
 	const [isActive, setIsActive] = useState(false);
 
 	const handleMouseDown = (e) => {
-		if (e.target.classList.contains(cls('overlay'))) {
+		if (e.target.classList.contains(cx('overlay'))) {
 			setOverlayClick(true);
 		} else {
 			setOverlayClick(false);
@@ -29,24 +29,24 @@ const AuthForm = () => {
 		!auth &&
 		ReactDOM.createPortal(
 			<div
-				className={cls('overlay', { show: isOpen })}
+				className={cx('overlay', { show: isOpen })}
 				onMouseDown={handleMouseDown}
 				onMouseUp={handleMouseUp}
 			>
 				<div
-					className={cls('wrapper', { active: isActive })}
+					className={cx('wrapper', { active: isActive })}
 					onClick={(e) => e.stopPropagation()}
 				>
-					<span className={cls('icon-close')}>
+					<span className={cx('icon-close')}>
 						<CloseIcon onClick={() => setOpenAuthForm(false)} />
 					</span>
-					<div className={cls('form', 'login')}>
-						<h3 className={cls('form-title')}>Login</h3>
+					<div className={cx('form', 'login')}>
+						<h3 className={cx('form-title')}>Login</h3>
 						{!isActive && <LoginForm />}
-						<div className={cls('form-account')}>
+						<div className={cx('form-account')}>
 							<p>Don't have an account?</p>
 							<span
-								className={cls('link')}
+								className={cx('link')}
 								onClick={(e) => {
 									e.preventDefault();
 									setIsActive(true);
@@ -56,13 +56,13 @@ const AuthForm = () => {
 							</span>
 						</div>
 					</div>
-					<div className={cls('form', 'register')}>
-						<h3 className={cls('form-title')}>Register</h3>
+					<div className={cx('form', 'register')}>
+						<h3 className={cx('form-title')}>Register</h3>
 						{isActive && <RegisterForm onBack={() => setIsActive(false)} />}
-						<div className={cls('form-account')}>
+						<div className={cx('form-account')}>
 							<p>Already have an account?</p>
 							<span
-								className={cls('link')}
+								className={cx('link')}
 								onClick={(e) => {
 									e.preventDefault();
 									setIsActive(false);

@@ -6,7 +6,7 @@ import { AuthContext } from '~/context/AuthProvider';
 import styles from './styles.module.scss';
 import { HideIcon, LockIcon, ShowIcon, UserIcon } from '~/components/Icons';
 
-const cls = classNames.bind(styles);
+const cx = classNames.bind(styles);
 
 const LoginForm = () => {
 	const { setAuth, setOpenAuthForm } = useContext(AuthContext);
@@ -36,14 +36,14 @@ const LoginForm = () => {
 
 	return (
 		<form
-			className={cls('form')}
+			className={cx('form')}
 			action=''
 			autoComplete='off'
 			onSubmit={handleSubmit}
 		>
-			{message && <p className={cls('text-danger')}>{message}</p>}
-			<div className={cls('form-input')}>
-				<span className={cls('icon-user')}>
+			{message && <p className={cx('text-danger')}>{message}</p>}
+			<div className={cx('form-input')}>
+				<span className={cx('icon-user')}>
 					<UserIcon />
 				</span>
 				<input
@@ -55,8 +55,8 @@ const LoginForm = () => {
 				/>
 				<label htmlFor='username'>Username</label>
 			</div>
-			<div className={cls('form-input')}>
-				<span className={cls('icon-lock')}>
+			<div className={cx('form-input')}>
+				<span className={cx('icon-lock')}>
 					<LockIcon />
 				</span>
 				<input
@@ -67,12 +67,12 @@ const LoginForm = () => {
 					placeholder=''
 				/>
 				<label htmlFor='password'>Password</label>
-				<span className={cls('icon-eye')} onClick={() => setIsShow(!isShow)}>
+				<span className={cx('icon-eye')} onClick={() => setIsShow(!isShow)}>
 					{isShow ? <HideIcon /> : <ShowIcon />}
 				</span>
 			</div>
-			<div className={cls('form-others')}>
-				<div className={cls('form-others__remember')}>
+			<div className={cx('form-others')}>
+				<div className={cx('form-others__remember')}>
 					<input type='checkbox' id='remember' />
 					<label htmlFor='remember'>Remember me</label>
 				</div>
@@ -80,7 +80,7 @@ const LoginForm = () => {
 			</div>
 			<button
 				type='submit'
-				className={cls(
+				className={cx(
 					'form-button',
 					username.trim() && password.trim() ? '' : 'disabled'
 				)}

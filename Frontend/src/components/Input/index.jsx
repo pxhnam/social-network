@@ -1,7 +1,7 @@
 import classNames from 'classnames/bind';
 import styles from './styles.module.scss';
 
-const cls = classNames.bind(styles);
+const cx = classNames.bind(styles);
 
 const Input = ({
 	label,
@@ -15,7 +15,7 @@ const Input = ({
 	onKeyDown,
 	autoFocus,
 }) => {
-	const classes = cls('form-input', {
+	const classes = cx('form-input', {
 		dark,
 		light,
 		error,
