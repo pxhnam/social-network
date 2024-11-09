@@ -8,6 +8,7 @@ import postService from '~/services/PostService';
 import chatService from '~/services/ChatService';
 import CreatePost from '~/components/CreatePost';
 import Post from '~/components/Post';
+import { Row, Col } from '~/components/Grid';
 
 const cx = classNames.bind(styles);
 
@@ -67,44 +68,56 @@ const ProfilePage = () => {
 	};
 
 	return loading ? null : user ? (
-		<div className={cx('wrapper')}>
-			<div className={cx('box-profile')}>
-				<div className={cx('box-profile__cover')}></div>
-				<div className={cx('box-profile__info')}>
-					<img
-						src={user?.avatar}
-						alt='avatar'
-						className={cx('profile-avatar')}
-					/>
-					<div className={cx('profile-identity')}>
-						<p>{user.first_name + ' ' + user.last_name}</p>
-						<span>{user.followerCount} followers</span>
-					</div>
-					<div className={cx('profile-action')}>
-						{user.itsme || (
-							<>
-								<button className={cx('btn-follow')} onClick={onFollow}>
-									{user.isFollowing ? 'Unfollow' : 'Follow'}
-								</button>
-								<button className={cx('btn-inbox')} onClick={onChat}>
-									Inbox
-								</button>
-							</>
-						)}
+		<Row className='d-flex flex-column align-items-center gap-3 pt-1'>
+			{/* <div className={cx('wrapper')}> */}
+			<Col xl='8' lg='10' xs='12'>
+				<div className={cx('box-profile')}>
+					<div className={cx('box-profile__cover')}></div>
+					<div className={cx('box-profile__info')}>
+						<img
+							src={user?.avatar}
+							alt='avatar'
+							className={cx('profile-avatar')}
+						/>
+						<div className={cx('profile-identity')}>
+							<p>{user.first_name + ' ' + user.last_name}</p>
+							<span>{user.followerCount} followers</span>
+						</div>
+						<div className={cx('profile-action')}>
+							{user.itsme || (
+								<>
+									<button className={cx('btn-follow')} onClick={onFollow}>
+										{user.isFollowing ? 'Unfollow' : 'Follow'}
+									</button>
+									<button className={cx('btn-inbox')} onClick={onChat}>
+										Inbox
+									</button>
+								</>
+							)}
+						</div>
 					</div>
 				</div>
-			</div>
-			{user.itsme && <CreatePost avatar={auth.avatar} />}
-			<div className={cx('posts')}>
-				{posts && posts.length > 0 ? (
-					posts.map((post) => <Post key={post._id} object={post} auth={auth} />)
-				) : (
-					<div>
-						<p>Chưa có bài viết nào.</p>
-					</div>
-				)}
-			</div>
-		</div>
+			</Col>
+			{user.itsme && (
+				<Col xxl='5' xl='6' lg='7' md='9' xs='12'>
+					<CreatePost avatar={auth.avatar} />
+				</Col>
+			)}
+			<Col xxl='5' xl='6' lg='7' md='9' xs='12'>
+				<div className={cx('posts')}>
+					{posts && posts.length > 0 ? (
+						posts.map((post) => (
+							<Post key={post._id} object={post} auth={auth} />
+						))
+					) : (
+						<div>
+							<p>Chưa có bài viết nào.</p>
+						</div>
+					)}
+				</div>
+			</Col>
+			{/* </div> */}
+		</Row>
 	) : (
 		<div
 			style={{

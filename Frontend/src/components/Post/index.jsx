@@ -31,11 +31,12 @@ const Post = ({ object }) => {
 	const [isComment, setIsComment] = useState(false);
 	const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 	const [isOverlayClick, setOverlayClick] = useState(false);
+	const [isHovered, setHovered] = useState(false);
 	const [comments, setComments] = useState([]);
 	const [newStatus, setNewStatus] = useState('');
 	const [isEditing, setIsEditing] = useState(false);
 	const [commentCount, setCommentCount] = useState(0);
-	const [shareCount, setShareCount] = useState(0);
+	// const [shareCount, setShareCount] = useState(0);
 	const [comment, setComment] = useState('');
 	const inputCommentRef = useRef(null);
 	const menuPostRef = useRef(null);
@@ -280,6 +281,16 @@ const Post = ({ object }) => {
 		},
 	];
 
+	useEffect(() => {
+		if (isFloating) {
+			document.body.style.overflow = isHovered ? 'hidden' : 'auto';
+		}
+
+		return () => {
+			document.body.style.overflow = 'auto';
+		};
+	}, [isFloating, isHovered]);
+
 	return (
 		init && (
 			<div
@@ -290,6 +301,8 @@ const Post = ({ object }) => {
 				<div
 					className={cx('post', { modal: isFloating })}
 					onClick={(e) => e.stopPropagation()}
+					onMouseEnter={() => setHovered(true)}
+					onMouseLeave={() => setHovered(false)}
 				>
 					{isFloating && (
 						<div className={cx('modal-header')}>

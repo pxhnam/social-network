@@ -1,5 +1,3 @@
-@import '../src/styles/variables';
-
 :root {
 	--header-color: #222222;
 	--bg-color: #141414;
@@ -30,9 +28,6 @@
 	--color-action: #b2b2b2;
 	--bg-action-hover: #424242;
 	--bg-action-active: #3e2526;
-
-	--container-padding-horizontal: 320px;
-	--height-header: 70px;
 }
 
 * {
@@ -42,6 +37,10 @@
 	font-family: Poppins, sans-serif;
 }
 
+html {
+	font-size: 62.5%;
+}
+
 body {
 	background-color: var(--bg-color);
 	color: var(--text-color);
@@ -49,41 +48,4 @@ body {
 
 a {
 	text-decoration: none;
-}
-
-.container {
-	padding: var(--height-header) var(--container-padding-horizontal) 15px;
-}
-@media (max-width: $breakpoint-xxxl) {
-	:root {
-		--container-padding-horizontal: 210px;
-	}
-}
-@media (max-width: $breakpoint-xxl) {
-	// :root {
-	// --container-padding-horizontal: 120px;
-	// }
-}
-@media (max-width: $breakpoint-xl) {
-	:root {
-		--container-padding-horizontal: 120px;
-	}
-}
-@media (max-width: $breakpoint-lg) {
-	:root {
-		--height-header: 150px;
-		--container-padding-horizontal: 120px;
-	}
-}
-
-@media (max-width: $breakpoint-md) {
-	:root {
-		--container-padding-horizontal: 80px;
-	}
-}
-
-@media (max-width: $breakpoint-sm) {
-	:root {
-		--container-padding-horizontal: 30px;
-	}
 }

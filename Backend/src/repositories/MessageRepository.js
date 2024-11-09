@@ -5,6 +5,7 @@ const MessageRepository = {
 		try {
 			const messages = await Message.find({ chat: chatId })
 				.populate('user')
+				.populate('attachments')
 				.sort({ createdAt: 1 });
 			return messages;
 		} catch (error) {
@@ -15,6 +16,16 @@ const MessageRepository = {
 		try {
 			const msg = new Message({ chat, user, content, attachments });
 			return await msg.save();
+		} catch (error) {
+			throw error;
+		}
+	},
+	getLatestByChatId: async (chatId) => {
+		try {
+			const latestMessage = await Message.findOne({ chat: chatId }).sort({
+				createdAt: -1,
+			});
+			return latestMessage;
 		} catch (error) {
 			throw error;
 		}

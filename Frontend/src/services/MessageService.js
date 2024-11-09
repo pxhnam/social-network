@@ -10,11 +10,12 @@ const MessageService = {
 			return error.response;
 		}
 	},
-	create: async (chatId, content) => {
+	create: async (formData) => {
 		try {
-			const response = await axios.post(SERVICE, {
-				chatId,
-				content,
+			const response = await axios.post(SERVICE, formData, {
+				headers: {
+					'Content-Type': 'multipart/form-data',
+				},
 			});
 			return response.data;
 		} catch (error) {

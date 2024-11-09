@@ -1,0 +1,46 @@
+@import '../../../assets/styles/mixins';
+
+.container {
+	--bs-gutter-x: 1.5rem;
+	--bs-gutter-y: 0;
+	width: 100%;
+	padding-right: calc(var(--bs-gutter-x) * 0.5);
+	padding-left: calc(var(--bs-gutter-x) * 0.5);
+	margin: 60px auto 0;
+}
+
+@include screen-sm {
+	.container {
+		max-width: 540px;
+	}
+}
+
+@include screen-md {
+	.container {
+		max-width: 720px;
+	}
+}
+
+@include screen-lg {
+	.container {
+		max-width: 960px;
+	}
+}
+
+@include screen-xl {
+	.container {
+		max-width: 1140px;
+	}
+}
+
+@include screen-xxl {
+	.container {
+		max-width: 1320px;
+	}
+}
+
+@include screen-3xl {
+	.container {
+		max-width: 1440px;
+	}
+}

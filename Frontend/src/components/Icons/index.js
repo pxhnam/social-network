@@ -19,8 +19,10 @@ import HideIcon from './HideIcon';
 import ChatBubbleIcon from './ChatBubbleIcon';
 import FaceSmileIcon from './FaceSmileIcon';
 import LaptopIcon from './LaptopIcon';
+import MenuIcon from './MenuIcon';
 
 export {
+	MenuIcon,
 	LaptopIcon,
 	FaceSmileIcon,
 	ChatBubbleIcon,

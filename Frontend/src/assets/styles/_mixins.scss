@@ -1,0 +1,55 @@
+@import './variables';
+
+@mixin responsive($width) {
+	@media screen and (min-width: $width) {
+		@content;
+	}
+}
+
+@mixin screen-x {
+	@include responsive($breakpoint-x) {
+		@content;
+	}
+}
+
+@mixin screen-xs {
+	@include responsive($breakpoint-xs) {
+		@content;
+	}
+}
+
+@mixin screen-sm {
+	@include responsive($breakpoint-sm) {
+		@content;
+	}
+}
+
+@mixin screen-md {
+	@include responsive($breakpoint-md) {
+		@content;
+	}
+}
+
+@mixin screen-lg {
+	@include responsive($breakpoint-lg) {
+		@content;
+	}
+}
+
+@mixin screen-xl {
+	@include responsive($breakpoint-xl) {
+		@content;
+	}
+}
+
+@mixin screen-xxl {
+	@include responsive($breakpoint-xxl) {
+		@content;
+	}
+}
+
+@mixin screen-3xl {
+	@include responsive($breakpoint-3xl) {
+		@content;
+	}
+}

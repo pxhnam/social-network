@@ -4,7 +4,7 @@ import { EllipsisIcon } from '~/components/Icons';
 
 const cx = classNames.bind(styles);
 
-const Message = ({ direction, content }) => {
+const Message = ({ direction, content, files }) => {
 	return (
 		<div className={cx(direction)}>
 			{direction === 'right' && (
@@ -12,7 +12,12 @@ const Message = ({ direction, content }) => {
 					<EllipsisIcon />
 				</span>
 			)}
-			<p>{content}</p>
+			<p>
+				{content}
+				{files &&
+					files.length > 0 &&
+					files.map((file) => <img key={file._id} src={file.url} />)}
+			</p>
 			{direction === 'left' && (
 				<span>
 					<EllipsisIcon />

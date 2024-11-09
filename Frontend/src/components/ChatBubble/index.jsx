@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import classNames from 'classnames/bind';
 import styles from './styles.module.scss';
@@ -13,9 +13,24 @@ const cx = classNames.bind(styles);
 const ChatBubble = () => {
 	const { chat } = useContext(ChatContext);
 	const [isActive, setActive] = useState(false);
+	const [isHovered, setHovered] = useState(false);
+
+	useEffect(() => {
+		if (isActive) {
+			document.body.style.overflow = isHovered ? 'hidden' : 'auto';
+		}
+
+		return () => {
+			document.body.style.overflow = 'auto';
+		};
+	}, [isActive, isHovered]);
 
 	return ReactDOM.createPortal(
-		<div className={cx('wrapper', { active: isActive })}>
+		<div
+			className={cx('wrapper', { active: isActive })}
+			onMouseEnter={() => setHovered(true)}
+			onMouseLeave={() => setHovered(false)}
+		>
 			<div className={cx('intro')} onClick={() => setActive(true)}>
 				<ChatBubbleIcon />
 				<p>Chat</p>

@@ -5,8 +5,8 @@ import { publicRoutes, privateRoutes } from '~/routes';
 import AuthForm from './components/Forms/Auth';
 import Layouts from '~/layouts';
 import Loading from '~/components/Loading';
-
-import '~/App.scss';
+import '~/assets/styles/utilities.scss';
+import '~/assets/styles/main.scss';
 import ChatBubble from './components/ChatBubble';
 import ChatProvider from './context/ChatProvider';
 

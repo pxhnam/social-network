@@ -1,5 +1,6 @@
 import Chat from '../repositories/ChatRepository.js';
 import User from '../repositories/UserRepository.js';
+import Message from '../repositories/MessageRepository.js';
 import TChat from '../constants/TChat.js';
 import response from '../helpers/Response.js';
 
@@ -7,28 +8,33 @@ const ChatService = {
 	get: async (userId) => {
 		try {
 			let chats = await Chat.getByUserId(userId);
-			chats = chats.map((chat) => {
-				let user = null;
-				let avatar, name, username;
-				if (chat.type === TChat.PRIVATE) {
-					user = chat.hosts.find(
-						(user) => user._id.toString() !== userId.toString()
-					);
-					avatar = user.avatar;
-					name = user.first_name + ' ' + user.last_name;
-					username = user.username;
-				} else {
-					avatar = chat.avatar;
-					name = chat.name;
-				}
+			chats = await Promise.all(
+				chats.map(async (chat) => {
+					const lastMessage = await Message.getLatestByChatId(chat._id);
+					let user = null;
+					let avatar, name, username;
+					if (chat.type === TChat.PRIVATE) {
+						user = chat.hosts.find(
+							(user) => user._id.toString() !== userId.toString()
+						);
+						avatar = user.avatar;
+						name = user.first_name + ' ' + user.last_name;
+						username = user.username;
+					} else {
+						avatar = chat.avatar;
+						name = chat.name;
+					}
 
-				return {
-					chatId: chat._id,
-					avatar,
-					name,
-					...(username && { username }),
-				};
-			});
+					return {
+						chatId: chat._id,
+						avatar,
+						name,
+						content: lastMessage ? lastMessage.content : null,
+						...(username && { username }),
+					};
+				})
+			);
+			console.log(chats);
 			return response.success('', chats);
 		} catch (error) {
 			throw error;

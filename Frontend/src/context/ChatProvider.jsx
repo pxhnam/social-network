@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from 'react';
+import { act, createContext, useContext, useEffect, useState } from 'react';
 import { AuthContext } from './AuthProvider';
 import chatService from '~/services/ChatService';
 import messageService from '~/services/MessageService';
@@ -10,7 +10,6 @@ const ChatProvider = ({ children }) => {
 	const [chat, setChat] = useState(null);
 	const [chatList, setChatList] = useState([]);
 	const [messages, setMessages] = useState([]);
-	const [message, setMessage] = useState('');
 
 	useEffect(() => {
 		if (socket && auth) {
@@ -74,33 +73,30 @@ const ChatProvider = ({ children }) => {
 		}
 	}, [chat]);
 
-	useEffect(() => {
+	const handleSendMessgae = async (formData) => {
 		try {
-			if (message.trim() && chat) {
-				(async () => {
-					const response = await messageService.create(chat.chatId, message);
-					if (response?.status) {
-						const data = {
-							...response?.data,
-							user: {
-								avatar: auth.avatar,
-								username: auth.username,
-								name: auth.name,
-							},
-						};
-						socket.emit('sendMessage', data);
-					}
-				})();
-				setMessage('');
+			if (chat) {
+				const response = await messageService.create(formData);
+				if (response?.status) {
+					const data = {
+						...response?.data,
+						user: {
+							avatar: auth.avatar,
+							username: auth.username,
+							name: auth.name,
+						},
+					};
+					socket.emit('sendMessage', data);
+				}
 			}
 		} catch (error) {
 			console.log(error);
 		}
-	}, [message]);
+	};
 
 	return (
 		<ChatContext.Provider
-			value={{ chat, setChat, chatList, messages, setMessage }}
+			value={{ chat, setChat, chatList, messages, handleSendMessgae }}
 		>
 			{auth && children}
 		</ChatContext.Provider>

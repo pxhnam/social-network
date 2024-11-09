@@ -6,23 +6,25 @@ import userService from '~/services/UserService';
 import { AuthContext } from '~/context/AuthProvider';
 import { publicRoutes } from '~/routes';
 import styles from './styles.module.scss';
-import { ChevronDownIcon } from '~/components/Icons';
+import { ChevronDownIcon, MenuIcon } from '~/components/Icons';
 
 const cx = classNames.bind(styles);
 
 function Header() {
 	const { auth, setAuth, setOpenAuthForm } = useContext(AuthContext);
-	const [isShow, setIsShow] = useState(false);
-	const menuRef = useRef();
+	const [isShow, setShow] = useState(false);
+	const [active, setActive] = useState(false);
+	const menuUserRef = useRef();
+	const menuNavRef = useRef();
 	const navigate = useNavigate();
 	const toggleMenuProfile = () => {
-		setIsShow((is) => !is);
+		setShow((is) => !is);
 	};
 
 	useEffect(() => {
 		const handleClickOutside = (event) => {
-			if (menuRef.current && !menuRef.current.contains(event.target)) {
-				setIsShow(false);
+			if (menuUserRef.current && !menuUserRef.current.contains(event.target)) {
+				setShow(false);
 			}
 		};
 
@@ -37,6 +39,24 @@ function Header() {
 		};
 	}, [isShow]);
 
+	useEffect(() => {
+		const handleClickOutside = (event) => {
+			if (menuNavRef.current && !menuNavRef.current.contains(event.target)) {
+				setActive(false);
+			}
+		};
+
+		if (active) {
+			document.addEventListener('mousedown', handleClickOutside);
+		} else {
+			document.removeEventListener('mousedown', handleClickOutside);
+		}
+
+		return () => {
+			document.removeEventListener('mousedown', handleClickOutside);
+		};
+	}, [active]);
+
 	const handleAuth = (e) => {
 		if (!auth) {
 			e.preventDefault();
@@ -44,12 +64,16 @@ function Header() {
 		}
 	};
 
+	const handleActive = () => {
+		setActive(!active);
+	};
+
 	const handleLogout = async () => {
 		try {
 			const { status, message } = await userService.logout();
 			if (status) {
 				toast.success(message);
-				setIsShow(false);
+				setShow(false);
 				setAuth(null);
 				navigate('/');
 			}
@@ -57,13 +81,25 @@ function Header() {
 			console.log(error);
 		}
 	};
+
 	return (
-		<header className={cx('header')}>
-			<nav className={cx('nav')}>
+		<header className={cx('header')} ref={menuNavRef}>
+			<div className={cx('nav-actions')}>
 				{/* Logo */}
-				<div className={cx('nav-logo')}>
+				<div className={cx('logo')}>
 					<Link to='/'>LOR</Link>
 				</div>
+				{/* Logo */}
+				<button className={cx('btn-menu')} onClick={handleActive}>
+					<MenuIcon />
+				</button>
+			</div>
+			<nav className={cx('nav', { active })}>
+				{/* Logo */}
+				<div className={cx('logo', 'nav-logo')}>
+					<Link to='/'>LOR</Link>
+				</div>
+				{/* Logo */}
 				{/* Navigation Links */}
 				<ul className={cx('nav-links')}>
 					{publicRoutes.map(
@@ -83,7 +119,7 @@ function Header() {
 				</ul>
 				{/* Navigation Links */}
 				{auth ? (
-					<div className={cx('nav-profile')} ref={menuRef}>
+					<div className={cx('nav-profile')} ref={menuUserRef}>
 						<div
 							className={cx('nav-profile__info')}
 							onClick={toggleMenuProfile}

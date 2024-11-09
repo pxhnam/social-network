@@ -9,7 +9,6 @@ import database from './config/database.js';
 import route from './routes/index.js';
 
 const app = express();
-
 database.connect();
 
 app.use(logger('dev'));

@@ -1,38 +1,42 @@
-@import '../../styles/variables';
+@import '../../assets/styles/mixins';
 
 .header {
 	position: fixed;
 	top: 0;
 	left: 0;
 	right: 0;
-	border-bottom: 1px solid var(--color-border-header);
+	border-bottom: 0.1rem solid var(--color-border-header);
 	background-color: var(--header-color);
-	padding: 1rem var(--container-padding-horizontal);
+	padding: 1rem 3rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	z-index: 10;
+	// overflow: hidden;
+
+	.logo {
+		font-size: 2.5rem;
+		font-weight: bolder;
+		user-select: none;
+
+		a {
+			color: var(--color-dark);
+		}
+	}
 
 	.nav {
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
 
-		&-logo {
-			font-size: 24px;
-			font-weight: bolder;
-			user-select: none;
-
-			a {
-				color: var(--color-dark);
-			}
-		}
-
 		&-links {
 			list-style: none;
 			display: flex;
-			gap: 50px;
 
 			&__item a {
 				position: relative;
 				color: var(--color-dark);
+				font-size: 1.5rem;
 				font-weight: bold;
 				transition: color 0.3s ease;
 
@@ -42,13 +46,13 @@
 				&::after {
 					content: '';
 					position: absolute;
-					height: 2px;
-					width: 0px;
+					height: 0.2rem;
+					width: 0;
 					background-color: var(--color-link);
-					bottom: -5px;
+					bottom: -0.5rem;
 					left: 50%;
 					transform: translateX(-50%);
-					border-radius: 12px;
+					border-radius: 1.2rem;
 					transition: width 0.3s ease;
 				}
 				&.active::after {
@@ -64,12 +68,13 @@
 			&__info {
 				display: flex;
 				justify-content: center;
+				font-size: 1.3rem;
 				align-items: center;
 				cursor: pointer;
 
 				.avatar {
-					height: 35px;
-					margin-right: 5px;
+					height: 3.5rem;
+					margin-right: 0.5rem;
 					border-radius: 50%;
 				}
 				span {
@@ -78,31 +83,30 @@
 			}
 
 			&__menu {
-				width: 180px;
+				width: 18rem;
 				position: absolute;
-				// width: 80%;
-				top: 45px;
+				top: 4.5rem;
 				left: 50%;
 				transform: translateX(-50%);
-				font-size: 13px;
+				font-size: 1.3rem;
 				list-style: none;
-				padding: 5px;
-				border-radius: 5px;
-				border: 1px solid var(--color-border-header);
+				padding: 0.5rem;
+				border-radius: 0.5rem;
+				border: 0.1rem solid var(--color-border-header);
 				background-color: var(--header-color);
 				z-index: 12;
 
 				li {
 					cursor: pointer;
-					padding: 15px 30px;
-					border-radius: 5px;
+					padding: 1.5rem 3rem;
+					border-radius: 0.5rem;
 					display: flex;
-					gap: 10px;
+					gap: 1rem;
 					align-items: center;
 
 					svg {
-						height: 21px;
-						width: 21px;
+						height: 2.1rem;
+						width: 2.1rem;
 					}
 
 					&:hover {
@@ -112,11 +116,76 @@
 			}
 		}
 	}
+	.nav-actions {
+		width: 100%;
 
-	@media (max-width: $breakpoint-lg) {
+		.btn-menu {
+			width: 2rem;
+			height: 2rem;
+			color: #fff;
+			background-color: transparent;
+			outline: none;
+			border: none;
+			cursor: pointer;
+		}
+	}
+}
+
+@include screen-x {
+	.header {
+		flex-direction: column;
+		gap: 1.5rem;
+
 		.nav {
+			display: none;
 			flex-direction: column;
-			gap: 15px;
+			margin-right: auto;
+			margin-bottom: 1rem;
+			gap: 1.5rem;
+
+			&.active {
+				display: flex;
+			}
+
+			&-logo {
+				display: none;
+			}
+
+			&-links {
+				flex-direction: column;
+				gap: 1.5rem;
+			}
+		}
+
+		.nav-actions {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+		}
+	}
+}
+
+@include screen-md {
+	.header {
+		flex-direction: row;
+
+		.nav {
+			width: 100%;
+			display: flex;
+			flex-direction: row;
+			margin-bottom: 0;
+			gap: 0;
+
+			&-logo {
+				display: block;
+			}
+			&-links {
+				flex-direction: row;
+				gap: 5rem;
+			}
+		}
+		.nav-actions {
+			display: none;
 		}
 	}
 }

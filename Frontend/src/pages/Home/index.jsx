@@ -6,6 +6,7 @@ import Post from '~/components/Post';
 import { AuthContext } from '~/context/AuthProvider';
 import CreatePost from '~/components/CreatePost';
 import postService from '~/services/PostService';
+import { Row, Col } from '~/components/Grid';
 
 const cx = classNames.bind(styles);
 
@@ -41,10 +42,16 @@ const HomePage = () => {
 	}, [inView]);
 
 	return (
-		<div className={cx('wrapper')}>
-			{auth && <CreatePost avatar={auth.avatar} />}
+		<Row className='d-flex flex-column align-items-center gap-3 pt-3'>
+			{auth && (
+				<Col xxl='5' xl='6' lg='7' md='9' xs='12'>
+					<CreatePost avatar={auth.avatar} />
+				</Col>
+			)}
 			{posts.map((post) => (
-				<Post key={post._id} object={post} />
+				<Col xxl='5' xl='6' lg='7' md='9' xs='12' key={post._id}>
+					<Post object={post} />
+				</Col>
 			))}
 			<span ref={ref}></span>
 			{loading && (
@@ -52,7 +59,7 @@ const HomePage = () => {
 					<span className={cx('loader')}></span>
 				</div>
 			)}
-		</div>
+		</Row>
 	);
 };
 
