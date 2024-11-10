@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import axios from 'axios';
 import AuthProvider from './context/AuthProvider';
+import ChatProvider from './context/ChatProvider';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
@@ -13,7 +14,9 @@ root.render(
 	// <React.StrictMode>
 	// </React.StrictMode>
 	<AuthProvider>
-		<App />
+		<ChatProvider>
+			<App />
+		</ChatProvider>
 	</AuthProvider>
 );
 

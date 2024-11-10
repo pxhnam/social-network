@@ -1,4 +1,6 @@
 import User from '../repositories/UserRepository.js';
+import Chat from '../repositories/ChatRepository.js';
+import TChat from '../constants/TChat.js';
 import { createToken } from '../helpers/Token.js';
 import response from '../helpers/Response.js';
 
@@ -12,12 +14,17 @@ const UserService = {
 
 			const user = await User.getByUsername(username);
 			if (user) {
+				const userChat = await Chat.findExistingChat(
+					[userCurrentId, user._id],
+					TChat.PRIVATE
+				);
 				const userData = {
 					first_name: user.first_name,
 					last_name: user.last_name,
 					avatar: user.avatar,
 					username: user.username,
 					itsme: user._id.equals(userCurrent && userCurrent._id),
+					chatId: userChat?._id,
 					followerCount: user.getFollowerCount(),
 					followingCount: user.getFollowingCount(),
 					isFollowing: userCurrent ? userCurrent.isFollowing(user._id) : false,

@@ -7,42 +7,40 @@ import response from '../helpers/Response.js';
 const ChatService = {
 	get: async (userId) => {
 		try {
-			let chats = await Chat.getByUserId(userId);
-			chats = await Promise.all(
-				chats.map(async (chat) => {
-					const lastMessage = await Message.getLatestByChatId(chat._id);
-					let user = null;
-					let avatar, name, username;
-					if (chat.type === TChat.PRIVATE) {
-						user = chat.hosts.find(
-							(user) => user._id.toString() !== userId.toString()
-						);
-						avatar = user.avatar;
-						name = user.first_name + ' ' + user.last_name;
-						username = user.username;
-					} else {
-						avatar = chat.avatar;
-						name = chat.name;
-					}
+			const chats = await Chat.getByUserId(userId);
+			const results = [];
+			for (const chat of chats) {
+				const lastMessage = await Message.getLatestByChatId(chat._id);
+				let user = null;
+				let avatar, name, username;
+				if (chat.type === TChat.PRIVATE) {
+					user = chat.hosts.find(
+						(user) => user._id.toString() !== userId.toString()
+					);
+					avatar = user.avatar;
+					name = user.first_name + ' ' + user.last_name;
+					username = user.username;
+				} else {
+					avatar = chat.avatar;
+					name = chat.name;
+				}
+				results.push({
+					_id: chat._id,
+					avatar,
+					name,
+					content: lastMessage ? lastMessage.content : null,
+					...(username && { username }),
+				});
+			}
 
-					return {
-						chatId: chat._id,
-						avatar,
-						name,
-						content: lastMessage ? lastMessage.content : null,
-						...(username && { username }),
-					};
-				})
-			);
-			console.log(chats);
-			return response.success('', chats);
+			return response.success('', results);
 		} catch (error) {
 			throw error;
 		}
 	},
 	private: async (userId, username) => {
 		try {
-			let hosts = [userId];
+			const hosts = [userId];
 			const type = TChat.PRIVATE;
 			const user = await User.getByUsername(username);
 			if (!user) {

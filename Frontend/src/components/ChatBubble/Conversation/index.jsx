@@ -36,7 +36,11 @@ const Conversation = () => {
 		e.preventDefault();
 		if (text.trim()) {
 			const formData = new FormData();
-			formData.append('chatId', chat.chatId);
+			if (chat?._id) {
+				formData.append('chatId', chat._id);
+			} else {
+				formData.append('username', chat.username);
+			}
 			formData.append('content', text);
 			files.map((file) => {
 				formData.append('attachments', file);

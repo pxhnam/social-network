@@ -8,7 +8,6 @@ import Loading from '~/components/Loading';
 import '~/assets/styles/utilities.scss';
 import '~/assets/styles/main.scss';
 import ChatBubble from './components/ChatBubble';
-import ChatProvider from './context/ChatProvider';
 
 const App = () => {
 	return (
@@ -62,9 +61,7 @@ const App = () => {
 						}
 					/>
 				</Routes>
-				<ChatProvider>
-					<ChatBubble />
-				</ChatProvider>
+				<ChatBubble />
 			</BrowserRouter>
 			<AuthForm />
 			<Toaster position='top-center' reverseOrder={true} />

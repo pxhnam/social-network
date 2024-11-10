@@ -1,39 +1,56 @@
+import { useCallback, useContext, useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
 import styles from './styles.module.scss';
-import { SearchIcon } from '~/components/Icons';
 import UserChat from '../UserChat';
-import { useCallback, useContext } from 'react';
 import { ChatContext } from '~/context/ChatProvider';
+import SearchChat from './SearchChat';
+import { debounce } from '~/utils/debounce';
 
 const cx = classNames.bind(styles);
 
 const SidebarChat = () => {
-	const { chatList, setChat, chat } = useContext(ChatContext);
+	const { chat, setChat, chatList } = useContext(ChatContext);
+	const [list, setList] = useState();
+
+	useEffect(() => {
+		setList(chatList);
+	}, [chatList]);
 
 	const handleChat = useCallback((chat) => {
 		setChat(chat);
 	}, []);
 
+	const handleSearch = useCallback(
+		debounce((e) => {
+			const value = e.target.value;
+			setList(
+				chatList.filter(
+					(user) =>
+						user.username.toLowerCase().includes(value.toLowerCase()) ||
+						user.name.toLowerCase().includes(value.toLowerCase())
+				)
+			);
+		}, 500),
+		[]
+	);
+
 	return (
 		<div className={cx('sidebar')}>
 			<div className={cx('sidebar-header')}>
-				<div className={cx('form-input')}>
-					<SearchIcon />
-					<input type='text' placeholder='Search...' />
-				</div>
+				<SearchChat onChange={handleSearch} />
 			</div>
 			<div className={cx('list')}>
-				{chatList?.length > 0 &&
-					chatList.map((chatItem) => (
+				{list?.length > 0 &&
+					list.map((userChat) => (
 						<UserChat
-							key={chatItem.chatId}
-							avatar={chatItem.avatar}
-							name={chatItem.name}
+							key={userChat?._id}
+							avatar={userChat?.avatar}
+							name={userChat?.name}
 							time='2 giờ'
-							content={chatItem.content}
-							online={chatItem?.isOnline}
-							onClick={() => handleChat(chatItem)}
-							active={chat?.username === chatItem.username}
+							content={userChat?.content}
+							online={userChat?.isOnline}
+							onClick={() => handleChat(userChat)}
+							active={chat?._id === userChat?._id}
 						/>
 					))}
 			</div>

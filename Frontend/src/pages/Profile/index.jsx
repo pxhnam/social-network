@@ -1,11 +1,12 @@
 import classNames from 'classnames/bind';
 import { useEffect, useState, useContext } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import styles from './styles.module.scss';
 import { AuthContext } from '~/context/AuthProvider';
+import { ChatContext } from '~/context/ChatProvider';
 import userService from '~/services/UserService';
 import postService from '~/services/PostService';
 import chatService from '~/services/ChatService';
+import styles from './styles.module.scss';
 import CreatePost from '~/components/CreatePost';
 import Post from '~/components/Post';
 import { Row, Col } from '~/components/Grid';
@@ -13,12 +14,14 @@ import { Row, Col } from '~/components/Grid';
 const cx = classNames.bind(styles);
 
 const ProfilePage = () => {
-	const { auth } = useContext(AuthContext);
+	const { auth, onlineUsers } = useContext(AuthContext);
+	const { setChat, chatList, setChatList, setOpenChat } =
+		useContext(ChatContext);
 	const { username } = useParams();
 	const [user, setUser] = useState(null);
 	const [loading, setLoading] = useState(true);
 	const [posts, setPosts] = useState([]);
-	const navigate = useNavigate();
+	// const navigate = useNavigate();
 
 	const getUser = async () => {
 		try {
@@ -45,7 +48,7 @@ const ProfilePage = () => {
 		getPosts();
 	}, [username]);
 
-	const onFollow = async () => {
+	const handleFollow = async () => {
 		try {
 			if (user.isFollowing) {
 				await userService.unfollow(username);
@@ -56,15 +59,24 @@ const ProfilePage = () => {
 		} catch (error) {}
 	};
 
-	const onChat = async () => {
-		try {
-			const response = await chatService.private(username);
-			if (response?.status) {
-				navigate('/chats/' + response?.data?._id);
-			}
-		} catch (error) {
-			console.log(error);
+	const handleChat = async () => {
+		if (user?.chatId) {
+			setChat(chatList.find((chat) => chat._id === user.chatId));
+		} else {
+			const userChat = {
+				_id: null,
+				avatar: user.avatar,
+				name: user.first_name + ' ' + user.last_name,
+				username: user.username,
+				content: 'Chưa có tin nhắn nào',
+				isOnline: onlineUsers.some(
+					(onlUser) => onlUser.username === user.username
+				),
+			};
+			setChatList((list) => [userChat, ...list]);
+			setChat(userChat);
 		}
+		setOpenChat(true);
 	};
 
 	return loading ? null : user ? (
@@ -86,12 +98,14 @@ const ProfilePage = () => {
 						<div className={cx('profile-action')}>
 							{user.itsme || (
 								<>
-									<button className={cx('btn-follow')} onClick={onFollow}>
+									<button className={cx('btn-follow')} onClick={handleFollow}>
 										{user.isFollowing ? 'Unfollow' : 'Follow'}
 									</button>
-									<button className={cx('btn-inbox')} onClick={onChat}>
-										Inbox
-									</button>
+									{auth && (
+										<button className={cx('btn-inbox')} onClick={handleChat}>
+											Inbox
+										</button>
+									)}
 								</>
 							)}
 						</div>

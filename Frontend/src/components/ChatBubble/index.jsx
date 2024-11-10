@@ -7,50 +7,57 @@ import WelcomeChat from './WelcomeChat';
 import Conversation from './Conversation';
 import SidebarChat from './SidebarChat';
 import { ChatContext } from '~/context/ChatProvider';
+import { AuthContext } from '~/context/AuthProvider';
 
 const cx = classNames.bind(styles);
 
 const ChatBubble = () => {
-	const { chat } = useContext(ChatContext);
-	const [isActive, setActive] = useState(false);
+	const { auth } = useContext(AuthContext);
+	const { chat, isOpenChat, setOpenChat } = useContext(ChatContext);
 	const [isHovered, setHovered] = useState(false);
 
 	useEffect(() => {
-		if (isActive) {
+		!auth && setOpenChat(false);
+	}, [auth]);
+	useEffect(() => {
+		if (isOpenChat) {
 			document.body.style.overflow = isHovered ? 'hidden' : 'auto';
 		}
 
 		return () => {
 			document.body.style.overflow = 'auto';
 		};
-	}, [isActive, isHovered]);
+	}, [isOpenChat, isHovered]);
 
-	return ReactDOM.createPortal(
-		<div
-			className={cx('wrapper', { active: isActive })}
-			onMouseEnter={() => setHovered(true)}
-			onMouseLeave={() => setHovered(false)}
-		>
-			<div className={cx('intro')} onClick={() => setActive(true)}>
-				<ChatBubbleIcon />
-				<p>Chat</p>
-			</div>
-			<div className={cx('box-chat')}>
-				<div className={cx('header')}>
-					<p className={cx('title')}>Chat</p>
-					<span onClick={() => setActive(false)}>
-						<ChevronDownIcon />
-					</span>
+	return (
+		auth &&
+		ReactDOM.createPortal(
+			<div
+				className={cx('wrapper', { active: isOpenChat })}
+				onMouseEnter={() => setHovered(true)}
+				onMouseLeave={() => setHovered(false)}
+			>
+				<div className={cx('intro')} onClick={() => setOpenChat(true)}>
+					<ChatBubbleIcon />
+					<p>Chat</p>
 				</div>
-				<div className={cx('main')}>
-					<SidebarChat />
-					<div className={cx('content')}>
-						{chat ? <Conversation /> : <WelcomeChat />}
+				<div className={cx('box-chat')}>
+					<div className={cx('header')}>
+						<p className={cx('title')}>Chat</p>
+						<span onClick={() => setOpenChat(false)}>
+							<ChevronDownIcon />
+						</span>
+					</div>
+					<div className={cx('main')}>
+						<SidebarChat />
+						<div className={cx('content')}>
+							{chat ? <Conversation /> : <WelcomeChat />}
+						</div>
 					</div>
 				</div>
-			</div>
-		</div>,
-		document.body
+			</div>,
+			document.body
+		)
 	);
 };
 

@@ -8,13 +8,14 @@ export const ChatContext = createContext();
 const ChatProvider = ({ children }) => {
 	const { auth, socket, onlineUsers } = useContext(AuthContext);
 	const [chat, setChat] = useState(null);
+	const [isOpenChat, setOpenChat] = useState(false);
 	const [chatList, setChatList] = useState([]);
 	const [messages, setMessages] = useState([]);
 
 	useEffect(() => {
 		if (socket && auth) {
 			socket.on('updateMessage', (data) => {
-				if (data && data?.chatId === chat.chatId) {
+				if (data && data?.chatId === chat?._id) {
 					setMessages((msgs) => [...msgs, data]);
 				}
 			});
@@ -57,9 +58,9 @@ const ChatProvider = ({ children }) => {
 
 	useEffect(() => {
 		try {
-			if (chat) {
+			if (chat && chat?._id) {
 				(async () => {
-					const response = await messageService.get(chat.chatId);
+					const response = await messageService.get(chat?._id);
 					if (response?.status) {
 						setMessages(response?.data || []);
 					}
@@ -78,15 +79,29 @@ const ChatProvider = ({ children }) => {
 			if (chat) {
 				const response = await messageService.create(formData);
 				if (response?.status) {
-					const data = {
-						...response?.data,
+					const data = response?.data;
+					if (!data) return;
+					if (data?.username === chat.username && data?.chatId) {
+						setChat((prevChat) => ({
+							...prevChat,
+							_id: data.chatId,
+						}));
+						setChatList((prevList) =>
+							prevList.map((chatItem) =>
+								chatItem.username === data?.username
+									? { ...chatItem, _id: data.chatId }
+									: chatItem
+							)
+						);
+					}
+					socket.emit('sendMessage', {
+						...data,
 						user: {
 							avatar: auth.avatar,
 							username: auth.username,
 							name: auth.name,
 						},
-					};
-					socket.emit('sendMessage', data);
+					});
 				}
 			}
 		} catch (error) {
@@ -96,9 +111,18 @@ const ChatProvider = ({ children }) => {
 
 	return (
 		<ChatContext.Provider
-			value={{ chat, setChat, chatList, messages, handleSendMessgae }}
+			value={{
+				chat,
+				setChat,
+				isOpenChat,
+				setOpenChat,
+				chatList,
+				setChatList,
+				messages,
+				handleSendMessgae,
+			}}
 		>
-			{auth && children}
+			{children}
 		</ChatContext.Provider>
 	);
 };

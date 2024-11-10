@@ -1,8 +1,10 @@
 import Message from '../repositories/MessageRepository.js';
 import Chat from '../repositories/ChatRepository.js';
+import User from '../repositories/UserRepository.js';
 import Attachment from '../repositories/AttachmentRepository.js';
 import TAttachment from '../constants/TAttachment.js';
 import response from '../helpers/Response.js';
+import TChat from '../constants/TChat.js';
 
 const BASE_URL = 'http://127.0.0.1:' + process.env.PORT;
 
@@ -32,10 +34,39 @@ const MessageService = {
 			throw error;
 		}
 	},
-	create: async (chatId, userId, content, attachments = []) => {
+	create: async (chatId, username, userId, content, attachments = []) => {
 		try {
 			if (!content || !content.trim()) {
 				return response.error('Content is required');
+			}
+			if (!chatId) {
+				if (!username) return response.error('Chat not found');
+
+				const hosts = [userId];
+
+				const user = await User.getByUsername(username);
+				if (!user) {
+					return response.error('User not found');
+				}
+
+				if (hosts.includes(user._id.toString())) {
+					return response.error('User is already a host');
+				} else {
+					hosts.push(user._id);
+				}
+
+				const existingChat = await Chat.findExistingChat(hosts, TChat.PRIVATE);
+				if (!existingChat) {
+					const { _id } = await Chat.create(
+						null,
+						null,
+						hosts,
+						[],
+						null,
+						TChat.PRIVATE
+					);
+					chatId = _id;
+				}
 			}
 			const chat = await Chat.getById(chatId);
 			if (!chat) {
@@ -64,6 +95,7 @@ const MessageService = {
 			if (msg) {
 				return response.success('message created successfully', {
 					_id: msg._id,
+					username,
 					chatId: msg.chat,
 					members: [
 						...chat.hosts.map((user) => user.username),

@@ -16,11 +16,17 @@ class messageController {
 	};
 	Create = async (req, res) => {
 		try {
-			const { chatId, content } = req.body;
+			const { chatId, username, content } = req.body;
 			const userId = req.currentUserId;
 			const attachments = req.files;
 
-			const result = await Message.create(chatId, userId, content, attachments);
+			const result = await Message.create(
+				chatId,
+				username,
+				userId,
+				content,
+				attachments
+			);
 			return res.json(result);
 		} catch (error) {
 			console.log(error.message);

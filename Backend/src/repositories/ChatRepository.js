@@ -1,4 +1,5 @@
 import Chat from '../models/Chat.js';
+import TChat from '../constants/TChat.js';
 
 const ChatRepository = {
 	getByUserId: async (userId) => {

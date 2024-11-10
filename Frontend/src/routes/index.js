@@ -8,12 +8,8 @@ const publicRoutes = [
 	{ name: 'About', path: 'about', component: AboutPage },
 	{ path: 'profile/:username', component: ProfilePage },
 	{ path: 'posts/:id', component: PostPage },
-	{ path: 'secret', component: ProfilePage, auth: true },
 ];
 
-const privateRoutes = [
-	{ path: '', component: HomePage },
-	{ path: 'about', component: AboutPage },
-];
+const privateRoutes = [{ path: '', component: HomePage }];
 
 export { publicRoutes, privateRoutes };
