@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import classNames from 'classnames/bind';
 import { ChatContext } from '~/context/ChatProvider';
 import Message from './Message';
@@ -8,6 +8,7 @@ import {
 	CloseIcon,
 	FaceSmileIcon,
 	ImageIcon,
+	InfoCircleIcon,
 } from '~/components/Icons';
 
 const cx = classNames.bind(styles);
@@ -16,12 +17,15 @@ const Conversation = () => {
 	const { chat, messages, handleSendMessgae } = useContext(ChatContext);
 	const [files, setFiles] = useState([]);
 	const [text, setText] = useState('');
-	const messagesRef = useRef(null);
+	const msgEndRef = useRef(null);
 
 	useEffect(() => {
-		if (messagesRef.current) {
-			messagesRef.current.scrollTop = messagesRef.current.scrollHeight;
-		}
+		const timer = setTimeout(() => {
+			msgEndRef.current &&
+				msgEndRef.current.scrollIntoView({ behaviour: 'smooth' });
+		}, 50);
+
+		return () => clearTimeout(timer);
 	}, [messages]);
 
 	useEffect(() => {
@@ -69,6 +73,10 @@ const Conversation = () => {
 		setFiles((prevFiles) => prevFiles.filter((file) => file.name !== fileName));
 	};
 
+	const handleMessage = useCallback(() => {
+		console.log('click');
+	}, [messages]);
+
 	return (
 		<div className={cx('conversation')}>
 			<div className={cx('header')}>
@@ -78,8 +86,11 @@ const Conversation = () => {
 						<ChevronDownIcon />
 					</span>
 				</div>
+				<span className={cx('info-details')}>
+					<InfoCircleIcon />
+				</span>
 			</div>
-			<div className={cx('messages')} ref={messagesRef}>
+			<div className={cx('messages')}>
 				{messages?.length > 0 ? (
 					messages.map((msg) => (
 						<Message
@@ -87,6 +98,7 @@ const Conversation = () => {
 							direction={msg.user.username === chat.username ? 'left' : 'right'}
 							content={msg.content}
 							files={msg.attachments}
+							onClick={handleMessage}
 						/>
 					))
 				) : (
@@ -94,13 +106,18 @@ const Conversation = () => {
 						<p>No messages yet</p>
 					</div>
 				)}
+				<div ref={msgEndRef} />
 			</div>
 			<form className={cx('input')} onSubmit={handleSubmit}>
 				{files.length > 0 && (
 					<div className={cx('preview-attachments')}>
 						{files.map((file) => (
-							<div key={file.name} className={cx('image-container')}>
-								<img src={file.preview} alt={file.name} />
+							<div key={file.name} className={cx('file-container')}>
+								{file.type.includes('image') ? (
+									<img src={file.preview} alt={file.name} />
+								) : (
+									<video src={file.preview} alt={file.name} controls />
+								)}
 								<span
 									className={cx('close')}
 									onClick={() => handleRemoveFile(file.name)}

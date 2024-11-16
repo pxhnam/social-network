@@ -1,11 +1,10 @@
 import classNames from 'classnames/bind';
-import { useEffect, useState, useContext } from 'react';
+import { useEffect, useState, useContext, useCallback } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { AuthContext } from '~/context/AuthProvider';
 import { ChatContext } from '~/context/ChatProvider';
 import userService from '~/services/UserService';
 import postService from '~/services/PostService';
-import chatService from '~/services/ChatService';
 import styles from './styles.module.scss';
 import CreatePost from '~/components/CreatePost';
 import Post from '~/components/Post';
@@ -59,7 +58,7 @@ const ProfilePage = () => {
 		} catch (error) {}
 	};
 
-	const handleChat = async () => {
+	const handleChat = () => {
 		if (user?.chatId) {
 			setChat(chatList.find((chat) => chat._id === user.chatId));
 		} else {
@@ -81,7 +80,6 @@ const ProfilePage = () => {
 
 	return loading ? null : user ? (
 		<Row className='d-flex flex-column align-items-center gap-3 pt-1'>
-			{/* <div className={cx('wrapper')}> */}
 			<Col xl='8' lg='10' xs='12'>
 				<div className={cx('box-profile')}>
 					<div className={cx('box-profile__cover')}></div>
@@ -120,17 +118,14 @@ const ProfilePage = () => {
 			<Col xxl='5' xl='6' lg='7' md='9' xs='12'>
 				<div className={cx('posts')}>
 					{posts && posts.length > 0 ? (
-						posts.map((post) => (
-							<Post key={post._id} object={post} auth={auth} />
-						))
+						posts.map((post) => <Post key={post._id} props={post} />)
 					) : (
-						<div>
+						<div style={{ textAlign: 'center', fontSize: '1.3rem' }}>
 							<p>Chưa có bài viết nào.</p>
 						</div>
 					)}
 				</div>
 			</Col>
-			{/* </div> */}
 		</Row>
 	) : (
 		<div

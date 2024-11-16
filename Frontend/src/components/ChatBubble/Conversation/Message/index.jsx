@@ -1,10 +1,12 @@
+import { memo } from 'react';
 import classNames from 'classnames/bind';
+import PropTypes from 'prop-types';
 import styles from './styles.module.scss';
 import { EllipsisIcon } from '~/components/Icons';
 
 const cx = classNames.bind(styles);
 
-const Message = ({ direction, content, files }) => {
+const Message = ({ direction, content, files, onClick }) => {
 	return (
 		<div className={cx(direction)}>
 			{direction === 'right' && (
@@ -12,14 +14,20 @@ const Message = ({ direction, content, files }) => {
 					<EllipsisIcon />
 				</span>
 			)}
-			<p>
-				{content}
+			<div className={cx('message')}>
+				<p>{content}</p>
 				{files &&
 					files.length > 0 &&
-					files.map((file) => <img key={file._id} src={file.url} />)}
-			</p>
+					files.map((file) =>
+						file.type === 'image' ? (
+							<img key={file._id} src={file.url} />
+						) : (
+							<video key={file._id} src={file.url} />
+						)
+					)}
+			</div>
 			{direction === 'left' && (
-				<span>
+				<span onClick={onClick}>
 					<EllipsisIcon />
 				</span>
 			)}
@@ -27,4 +35,11 @@ const Message = ({ direction, content, files }) => {
 	);
 };
 
-export default Message;
+Message.propTypes = {
+	direction: PropTypes.string,
+	content: PropTypes.string,
+	files: PropTypes.array,
+	onClick: PropTypes.func,
+};
+
+export default memo(Message);

@@ -1,12 +1,12 @@
 import { useState, useContext, useRef, useEffect } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
-import toast from 'react-hot-toast';
 import classNames from 'classnames/bind';
 import userService from '~/services/UserService';
 import { AuthContext } from '~/context/AuthProvider';
 import { publicRoutes } from '~/routes';
 import styles from './styles.module.scss';
 import { ChevronDownIcon, MenuIcon } from '~/components/Icons';
+import toast from '~/components/custom-toast';
 
 const cx = classNames.bind(styles);
 
@@ -72,7 +72,7 @@ function Header() {
 		try {
 			const { status, message } = await userService.logout();
 			if (status) {
-				toast.success(message);
+				toast.success({ message });
 				setShow(false);
 				setAuth(null);
 				navigate('/');

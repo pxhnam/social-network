@@ -1,10 +1,10 @@
 import { useContext, useState } from 'react';
 import classNames from 'classnames/bind';
-import toast from 'react-hot-toast';
 import userService from '~/services/UserService';
 import { AuthContext } from '~/context/AuthProvider';
 import styles from './styles.module.scss';
 import { HideIcon, LockIcon, ShowIcon, UserIcon } from '~/components/Icons';
+import toast from '~/components/custom-toast';
 
 const cx = classNames.bind(styles);
 
@@ -24,7 +24,7 @@ const LoginForm = () => {
 					setAuth(response.data);
 					setMessage('');
 					setOpenAuthForm(false);
-					toast.success(response.message);
+					toast.success({ message: response.message });
 				} else {
 					setMessage(response.message);
 				}

@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import classNames from 'classnames/bind';
-import toast from 'react-hot-toast';
 import styles from './styles.module.scss';
 import postService from '~/services/PostService';
 import { ImageIcon, SendIcon } from '../Icons';
+import toast from '../custom-toast';
 
 const cx = classNames.bind(styles);
 
@@ -50,10 +50,10 @@ const CreatePost = ({ avatar }) => {
 					console.log(response);
 					setText('');
 					setMedia([]);
-					toast.success(response.message);
+					toast.success({ message: response.message });
 				}
 			} catch (error) {
-				toast.error('Something went wrong!');
+				toast.error({ message: 'Something went wrong!' });
 			}
 		} else {
 			textareaRef.current.focus();

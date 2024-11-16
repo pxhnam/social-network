@@ -50,7 +50,7 @@ const HomePage = () => {
 			)}
 			{posts.map((post) => (
 				<Col xxl='5' xl='6' lg='7' md='9' xs='12' key={post._id}>
-					<Post object={post} />
+					<Post props={post} />
 				</Col>
 			))}
 			<span ref={ref}></span>

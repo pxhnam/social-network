@@ -1,6 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Fragment } from 'react';
-import { Toaster } from 'react-hot-toast';
 import { publicRoutes, privateRoutes } from '~/routes';
 import AuthForm from './components/Forms/Auth';
 import Layouts from '~/layouts';
@@ -64,7 +63,6 @@ const App = () => {
 				<ChatBubble />
 			</BrowserRouter>
 			<AuthForm />
-			<Toaster position='top-center' reverseOrder={true} />
 		</>
 	);
 };

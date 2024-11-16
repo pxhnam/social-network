@@ -1,6 +1,11 @@
 .comment {
 	display: flex;
+	opacity: 1;
 	gap: 10px;
+	transition: opacity 0.3s ease-out;
+	&.removed {
+		opacity: 0;
+	}
 
 	&-avatar {
 		height: 35px;

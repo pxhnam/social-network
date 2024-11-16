@@ -2,10 +2,11 @@ import { useContext, useEffect, useRef, useState, memo } from 'react';
 import classNames from 'classnames/bind';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import PropTypes from 'prop-types';
 import { AuthContext } from '~/context/AuthProvider';
-import styles from './styles.module.scss';
 import postService from '~/services/PostService';
 import commentService from '~/services/CommentService';
+import styles from './styles.module.scss';
 import {
 	ShareIcon,
 	EllipsisIcon,
@@ -16,16 +17,16 @@ import {
 import Comment from '../Comment';
 import MediaSlider from '../MediaSlider';
 import DropdownMenu from '../DropdownMenu';
-import toast from 'react-hot-toast';
+import toast from '../custom-toast';
 
 const cx = classNames.bind(styles);
 
-const Post = ({ object }) => {
+const Post = ({ props }) => {
 	const LIMIT = 10;
 	const { auth, socket } = useContext(AuthContext);
 	const [init, setInit] = useState(true);
-	const [post, setPost] = useState(object ?? []);
-	const [tempFiles, setTempFiles] = useState(object ?? []);
+	const [post, setPost] = useState(props || []);
+	const [tempFiles, setTempFiles] = useState([]);
 	const [isFloating, setIsFloating] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
 	const [isComment, setIsComment] = useState(false);
@@ -88,7 +89,9 @@ const Post = ({ object }) => {
 			});
 			socket.on('updateComment', ({ postId, ...cmt }) => {
 				if (postId === post._id) {
-					setComments((oldData) => [...oldData, cmt]);
+					setComments((oldData) =>
+						Array.isArray(oldData) ? [...oldData, cmt] : [cmt]
+					);
 				}
 			});
 		}
@@ -207,7 +210,7 @@ const Post = ({ object }) => {
 
 			const { status, message } = await postService.update(formData);
 			if (status) {
-				toast.success(message);
+				toast.success({ message });
 				setIsEditing(false);
 				setPost((data) => ({
 					...data,
@@ -216,7 +219,7 @@ const Post = ({ object }) => {
 					),
 				}));
 			} else {
-				toast.error(message);
+				toast.error({ message });
 			}
 		} catch (error) {
 			console.log(error);
@@ -267,10 +270,10 @@ const Post = ({ object }) => {
 							const { status, message } = await postService.remove(post._id);
 							setIsDropdownOpen(!status);
 							if (status) {
-								toast.success(message);
+								toast.success({ message });
 								setInit(false);
 							} else {
-								toast.error(message);
+								toast.error({ message });
 							}
 						} catch (error) {
 							console.log(error);
@@ -479,13 +482,10 @@ const Post = ({ object }) => {
 							{comments.slice(isFloating ? 0 : -3).map((comment) => (
 								<Comment
 									key={comment._id}
-									id={comment._id}
-									avatar={comment.avatar}
-									username={comment.username}
-									name={comment.name}
-									content={comment.content}
-									time={comment.createdAt}
-									isAuthor={auth?.username === comment.username}
+									props={{
+										...comment,
+										isAuthor: auth?.username === comment.username,
+									}}
 								/>
 							))}
 						</div>
@@ -514,6 +514,10 @@ const Post = ({ object }) => {
 			</div>
 		)
 	);
+};
+
+Post.propTypes = {
+	props: PropTypes.object,
 };
 
 export default memo(Post);

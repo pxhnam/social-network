@@ -19,6 +19,9 @@ const SidebarChat = () => {
 	const handleChat = useCallback((chat) => {
 		setChat(chat);
 	}, []);
+	const handleAction = (e) => {
+		e.stopPropagation();
+	};
 
 	const handleSearch = useCallback(
 		debounce((e) => {
@@ -46,10 +49,11 @@ const SidebarChat = () => {
 							key={userChat?._id}
 							avatar={userChat?.avatar}
 							name={userChat?.name}
-							time='2 giờ'
+							time=''
 							content={userChat?.content}
 							online={userChat?.isOnline}
 							onClick={() => handleChat(userChat)}
+							onAction={handleAction}
 							active={chat?._id === userChat?._id}
 						/>
 					))}

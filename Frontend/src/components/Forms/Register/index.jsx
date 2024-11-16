@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import toast from 'react-hot-toast';
 import classNames from 'classnames/bind';
 import userService from '~/services/UserService';
 import styles from './styles.module.scss';
 import { HideIcon, LockIcon, ShowIcon, UserIcon } from '~/components/Icons';
+import toast from '~/components/custom-toast';
 
 const cx = classNames.bind(styles);
 
@@ -33,7 +33,7 @@ const RegisterForm = ({ onBack }) => {
 				setMessage('');
 				if (response.status) {
 					onBack();
-					toast.success(response.message);
+					toast.success({ message: response.message });
 				} else {
 					setMessage(response.message);
 				}

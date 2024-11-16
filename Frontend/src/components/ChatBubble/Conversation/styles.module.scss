@@ -6,6 +6,9 @@
 	.header {
 		box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.2);
 		padding: 1rem;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
 
 		.info-action {
 			display: flex;
@@ -35,6 +38,18 @@
 				svg {
 					stroke: #fff;
 				}
+			}
+		}
+		.info-details {
+			width: 1.7rem;
+			height: 1.7rem;
+			color: #999;
+			transition: color 0.3s ease;
+			border-radius: 50%;
+
+			&:hover {
+				color: #fff;
+				cursor: pointer;
 			}
 		}
 	}
@@ -69,16 +84,20 @@
 			height: 12rem;
 			overflow-y: hidden;
 			overflow-x: auto;
+			padding: 1rem;
 			gap: 1rem;
 
-			.image-container {
+			.file-container {
 				position: relative;
 				height: 100%;
 				width: fit-content;
 
-				img {
+				img,
+				video {
 					border-radius: 0.3rem;
 					height: 100%;
+				}
+				img {
 					object-fit: cover;
 				}
 				.close {
@@ -90,7 +109,9 @@
 					align-items: center;
 					top: 0;
 					right: 0;
+					transform: translate(50%, -50%);
 					background-color: rgba(51, 51, 51, 0.8);
+					box-shadow: 0 0 3px 0 rgba(51, 51, 51, 0.8);
 					border-radius: 50%;
 					cursor: pointer;
 

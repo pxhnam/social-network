@@ -2,23 +2,27 @@
 .right {
 	display: flex;
 	align-items: center;
-	gap: 5px;
-
-	p {
+	gap: 0.5rem;
+	.message {
 		width: fit-content;
 		max-width: 80%;
-		padding: 7px 12px;
-		border-radius: 3px;
-		text-align: justify;
+		padding: 0.7rem 1.2rem;
+		border-radius: 0.3rem;
 		background-color: #222222;
-		img {
+
+		p {
+			text-align: justify;
+		}
+		img,
+		video {
 			width: 100%;
+			border-radius: 0.3rem;
 		}
 	}
 
 	span {
-		width: 17px;
-		height: 17px;
+		width: 1.7rem;
+		height: 1.7rem;
 		color: #999;
 		opacity: 0;
 		transition: opacity 0.3s ease;
