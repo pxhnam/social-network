@@ -22,7 +22,7 @@ const Message = ({ direction, content, files, onClick }) => {
 						file.type === 'image' ? (
 							<img key={file._id} src={file.url} />
 						) : (
-							<video key={file._id} src={file.url} />
+							<video key={file._id} src={file.url} controls />
 						)
 					)}
 			</div>

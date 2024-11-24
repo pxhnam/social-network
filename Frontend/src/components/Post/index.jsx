@@ -1,9 +1,9 @@
-import { useContext, useEffect, useRef, useState, memo } from 'react';
+import { useEffect, useRef, useState, memo } from 'react';
 import classNames from 'classnames/bind';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import PropTypes from 'prop-types';
-import { AuthContext } from '~/context/AuthProvider';
+import { useAuth } from '~/context/AuthProvider';
 import postService from '~/services/PostService';
 import commentService from '~/services/CommentService';
 import styles from './styles.module.scss';
@@ -17,13 +17,13 @@ import {
 import Comment from '../Comment';
 import MediaSlider from '../MediaSlider';
 import DropdownMenu from '../DropdownMenu';
-import toast from '../custom-toast';
+import { toast } from '../ToastContainer';
 
 const cx = classNames.bind(styles);
 
 const Post = ({ props }) => {
 	const LIMIT = 10;
-	const { auth, socket } = useContext(AuthContext);
+	const { auth, socket } = useAuth();
 	const [init, setInit] = useState(true);
 	const [post, setPost] = useState(props || []);
 	const [tempFiles, setTempFiles] = useState([]);
@@ -210,7 +210,7 @@ const Post = ({ props }) => {
 
 			const { status, message } = await postService.update(formData);
 			if (status) {
-				toast.success({ message });
+				toast.success(message);
 				setIsEditing(false);
 				setPost((data) => ({
 					...data,
@@ -219,7 +219,7 @@ const Post = ({ props }) => {
 					),
 				}));
 			} else {
-				toast.error({ message });
+				toast.error(message);
 			}
 		} catch (error) {
 			console.log(error);
@@ -270,10 +270,10 @@ const Post = ({ props }) => {
 							const { status, message } = await postService.remove(post._id);
 							setIsDropdownOpen(!status);
 							if (status) {
-								toast.success({ message });
+								toast.success(message);
 								setInit(false);
 							} else {
-								toast.error({ message });
+								toast.error(message);
 							}
 						} catch (error) {
 							console.log(error);

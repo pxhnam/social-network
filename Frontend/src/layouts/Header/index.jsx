@@ -1,17 +1,17 @@
-import { useState, useContext, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import classNames from 'classnames/bind';
 import userService from '~/services/UserService';
-import { AuthContext } from '~/context/AuthProvider';
-import { publicRoutes } from '~/routes';
+import { useAuth } from '~/context/AuthProvider';
+// import { publicRoutes } from '~/routes';
 import styles from './styles.module.scss';
 import { ChevronDownIcon, MenuIcon } from '~/components/Icons';
-import toast from '~/components/custom-toast';
+import { toast } from '~/components/ToastContainer';
 
 const cx = classNames.bind(styles);
 
 function Header() {
-	const { auth, setAuth, setOpenAuthForm } = useContext(AuthContext);
+	const { auth, setAuth, setOpenAuthForm } = useAuth();
 	const [isShow, setShow] = useState(false);
 	const [active, setActive] = useState(false);
 	const menuUserRef = useRef();
@@ -72,7 +72,7 @@ function Header() {
 		try {
 			const { status, message } = await userService.logout();
 			if (status) {
-				toast.success({ message });
+				toast.success(message);
 				setShow(false);
 				setAuth(null);
 				navigate('/');
@@ -102,7 +102,23 @@ function Header() {
 				{/* Logo */}
 				{/* Navigation Links */}
 				<ul className={cx('nav-links')}>
-					{publicRoutes.map(
+					<li className={cx('nav-links__item')}>
+						<NavLink
+							to='/'
+							className={({ isActive }) => cx({ active: isActive })}
+						>
+							Home
+						</NavLink>
+					</li>
+					<li className={cx('nav-links__item')}>
+						<NavLink
+							to='/about'
+							className={({ isActive }) => cx({ active: isActive })}
+						>
+							About
+						</NavLink>
+					</li>
+					{/* {publicRoutes.map(
 						(route, index) =>
 							route.name && (
 								<li className={cx('nav-links__item')} key={index}>
@@ -115,7 +131,7 @@ function Header() {
 									</NavLink>
 								</li>
 							)
-					)}
+					)} */}
 				</ul>
 				{/* Navigation Links */}
 				{auth ? (

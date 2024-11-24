@@ -3,7 +3,7 @@ import classNames from 'classnames/bind';
 import userService from '~/services/UserService';
 import styles from './styles.module.scss';
 import { HideIcon, LockIcon, ShowIcon, UserIcon } from '~/components/Icons';
-import toast from '~/components/custom-toast';
+import { toast } from '~/components/ToastContainer';
 
 const cx = classNames.bind(styles);
 
@@ -33,7 +33,7 @@ const RegisterForm = ({ onBack }) => {
 				setMessage('');
 				if (response.status) {
 					onBack();
-					toast.success({ message: response.message });
+					toast.success(response.message);
 				} else {
 					setMessage(response.message);
 				}

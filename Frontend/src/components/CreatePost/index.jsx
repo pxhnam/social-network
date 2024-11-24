@@ -3,7 +3,7 @@ import classNames from 'classnames/bind';
 import styles from './styles.module.scss';
 import postService from '~/services/PostService';
 import { ImageIcon, SendIcon } from '../Icons';
-import toast from '../custom-toast';
+import { toast } from '../ToastContainer';
 
 const cx = classNames.bind(styles);
 
@@ -50,10 +50,10 @@ const CreatePost = ({ avatar }) => {
 					console.log(response);
 					setText('');
 					setMedia([]);
-					toast.success({ message: response.message });
+					toast.success(response.message);
 				}
 			} catch (error) {
-				toast.error({ message: 'Something went wrong!' });
+				toast.error('Something went wrong!');
 			}
 		} else {
 			textareaRef.current.focus();

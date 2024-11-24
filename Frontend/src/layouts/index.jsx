@@ -1,11 +1,13 @@
 import { Container } from '~/components/Grid';
 import Header from './Header';
-function Layout({ children }) {
+import { Outlet } from 'react-router-dom';
+function Layout() {
 	return (
 		<>
 			<Header />
-			{/* <div className='container'>{children}</div> */}
-			<Container>{children}</Container>
+			<Container>
+				<Outlet />
+			</Container>
 		</>
 	);
 }

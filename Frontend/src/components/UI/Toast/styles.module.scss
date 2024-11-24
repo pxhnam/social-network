@@ -1,17 +1,16 @@
 .toast {
 	display: flex;
 	align-items: center;
-	max-width: 400px;
+	max-width: 40rem;
 	width: fit-content;
-	padding: 10px 14px;
-	position: absolute;
-	border-radius: 5px;
-	overflow: hidden;
+	padding: 1rem 1.4rem;
+	border-radius: 0.5rem;
 	background: white;
-	box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
-	top: 5px;
-	left: 50%;
-	transform: translateX(-50%);
+	box-shadow: 0 0.2rem 1.5rem rgba(0, 0, 0, 0.1);
+	animation: toast-in 0.3s cubic-bezier(0.47, 0.02, 0.44, 2) forwards;
+	pointer-events: auto;
+	user-select: none;
+	overflow: hidden;
 
 	&-success {
 		--primary: #2dd743;
@@ -21,14 +20,14 @@
 		transform: rotate(-45deg);
 	}
 	&-success .icon::before {
-		width: 10px;
-		height: 3px;
-		transform: translate(calc(-50% + 1px), calc(-50% + 1px));
+		width: 1rem;
+		height: 0.3rem;
+		transform: translate(calc(-50% + 0.1rem), calc(-50% + 0.1rem));
 	}
 	&-success .icon::after {
-		width: 3px;
-		height: 6px;
-		transform: translate(calc(-50% - 3px), calc(-50% - 1px));
+		width: 0.3rem;
+		height: 0.6rem;
+		transform: translate(calc(-50% - 0.3rem), calc(-50% - 0.1rem));
 	}
 
 	&-warning {
@@ -36,14 +35,14 @@
 		--secondary: #ffeedf;
 	}
 	&-warning .icon::before {
-		width: 3px;
-		height: 3px;
-		transform: translate(-50%, calc(-50% + 4px));
+		width: 0.3rem;
+		height: 0.3rem;
+		transform: translate(-50%, calc(-50% + 0.4rem));
 	}
 	&-warning .icon::after {
-		width: 3px;
-		height: 7px;
-		transform: translate(-50%, calc(-50% - 2px));
+		width: 0.3rem;
+		height: 0.7rem;
+		transform: translate(-50%, calc(-50% - 0.2rem));
 	}
 
 	&-error {
@@ -51,14 +50,14 @@
 		--secondary: #ffeaec;
 	}
 	&-error .icon::before {
-		width: 3px;
-		height: 3px;
-		transform: translate(-50%, calc(-50% + 4px));
+		width: 0.3rem;
+		height: 0.3rem;
+		transform: translate(-50%, calc(-50% + 0.4rem));
 	}
 	&-error .icon::after {
-		width: 3px;
-		height: 7px;
-		transform: translate(-50%, calc(-50% - 2px));
+		width: 0.3rem;
+		height: 0.7rem;
+		transform: translate(-50%, calc(-50% - 0.2rem));
 	}
 
 	&-info {
@@ -66,23 +65,23 @@
 		--secondary: #cfeffc;
 	}
 	&-info .icon::before {
-		width: 3px;
-		height: 7px;
-		transform: translate(-50%, calc(-50% + 2px));
+		width: 0.3rem;
+		height: 0.7rem;
+		transform: translate(-50%, calc(-50% + 0.2rem));
 	}
 	&-info .icon::after {
-		width: 3px;
-		height: 3px;
-		transform: translate(-50%, calc(-50% - 4px));
+		width: 0.3rem;
+		height: 0.3rem;
+		transform: translate(-50%, calc(-50% - 0.4rem));
 	}
 
 	&-icon {
-		width: 30px;
-		height: 30px;
+		width: 3rem;
+		height: 3rem;
 		background: var(--secondary);
-		border-radius: 5px;
+		border-radius: 0.5rem;
 		box-sizing: border-box;
-		padding: 5px;
+		padding: 0.5rem;
 		flex-shrink: 0;
 
 		.icon {
@@ -97,7 +96,7 @@
 				position: absolute;
 				content: '';
 				background: var(--secondary);
-				border-radius: 5px;
+				border-radius: 0.5rem;
 				top: 50%;
 				left: 50%;
 			}
@@ -105,20 +104,20 @@
 	}
 
 	&-message {
-		padding: 5px 20px 5px 10px;
+		padding: 0.5rem 2rem 0.5rem 1rem;
 		h4,
 		p {
 			margin: 0;
 			line-height: 1.2em;
 		}
 		h4 {
-			font-size: 14px;
+			font-size: 1.4rem;
 			font-weight: 600;
 			letter-spacing: 0.05em;
 			color: #404040;
 		}
 		p {
-			font-size: 10px;
+			font-size: 1rem;
 			font-weight: 300;
 			letter-spacing: 0.05em;
 			color: #606060;
@@ -127,9 +126,9 @@
 
 	&-close {
 		position: relative;
-		padding: 12px;
+		padding: 1.2rem;
 		border: none;
-		border-radius: 5px;
+		border-radius: 0.5rem;
 		cursor: pointer;
 		background: rgba(0, 0, 0, 0);
 		transition: background 0.2s ease-in-out;
@@ -141,9 +140,9 @@
 		&::after {
 			position: absolute;
 			content: '';
-			height: 12px;
-			width: 1px;
-			border-radius: 5px;
+			height: 1.2rem;
+			width: 0.1rem;
+			border-radius: 0.5rem;
 			background: #606060;
 			top: 50%;
 			left: 50%;
@@ -160,28 +159,13 @@
 			transform: translate(-50%, -50%) rotate(-45deg);
 		}
 	}
+}
 
-	&-timer {
-		width: 0%;
-		height: 4px;
-		background: var(--primary);
-		position: absolute;
-		bottom: 0;
-		left: 0;
-		border-top-right-radius: 5px;
-		box-shadow: 0 0 8px var(--primary);
-
-		&__animation {
-			animation: countdown 5s linear forwards;
-		}
+@keyframes toast-in {
+	from {
+		transform: translateY(-100%);
 	}
-
-	@keyframes countdown {
-		from {
-			width: 100%;
-		}
-		to {
-			width: 0%;
-		}
+	to {
+		transform: translateY(0%);
 	}
 }

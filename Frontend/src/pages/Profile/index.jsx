@@ -1,8 +1,8 @@
 import classNames from 'classnames/bind';
-import { useEffect, useState, useContext, useCallback } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import { AuthContext } from '~/context/AuthProvider';
-import { ChatContext } from '~/context/ChatProvider';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { useAuth } from '~/context/AuthProvider';
+import { useChat } from '~/context/ChatProvider';
 import userService from '~/services/UserService';
 import postService from '~/services/PostService';
 import styles from './styles.module.scss';
@@ -13,14 +13,12 @@ import { Row, Col } from '~/components/Grid';
 const cx = classNames.bind(styles);
 
 const ProfilePage = () => {
-	const { auth, onlineUsers } = useContext(AuthContext);
-	const { setChat, chatList, setChatList, setOpenChat } =
-		useContext(ChatContext);
+	const { auth, onlineUsers } = useAuth();
+	const { setChat, chatList, setChatList, setOpenChat } = useChat();
 	const { username } = useParams();
 	const [user, setUser] = useState(null);
 	const [loading, setLoading] = useState(true);
 	const [posts, setPosts] = useState([]);
-	// const navigate = useNavigate();
 
 	const getUser = async () => {
 		try {
@@ -130,7 +128,6 @@ const ProfilePage = () => {
 	) : (
 		<div
 			style={{
-				marginTop: '20px',
 				textAlign: 'center',
 				marginTop: '50px',
 			}}

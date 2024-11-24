@@ -3,6 +3,7 @@ import classNames from 'classnames/bind';
 import PropTypes from 'prop-types';
 import styles from './styles.module.scss';
 import { ChevronDownIcon } from '~/components/Icons';
+import { useNavigate } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 
@@ -16,6 +17,7 @@ const UserChat = ({
 	onClick,
 	onAction,
 }) => {
+	const navigate = useNavigate();
 	return (
 		<div className={cx('wrapper', { active })} onClick={onClick}>
 			<div className={cx('box-avatar', { online })}>

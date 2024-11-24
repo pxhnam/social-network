@@ -1,15 +1,15 @@
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import classNames from 'classnames/bind';
 import userService from '~/services/UserService';
-import { AuthContext } from '~/context/AuthProvider';
+import { useAuth } from '~/context/AuthProvider';
 import styles from './styles.module.scss';
 import { HideIcon, LockIcon, ShowIcon, UserIcon } from '~/components/Icons';
-import toast from '~/components/custom-toast';
+import { toast } from '~/components/ToastContainer';
 
 const cx = classNames.bind(styles);
 
 const LoginForm = () => {
-	const { setAuth, setOpenAuthForm } = useContext(AuthContext);
+	const { setAuth, setOpenAuthForm } = useAuth();
 	const [isShow, setIsShow] = useState(false);
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
@@ -24,7 +24,7 @@ const LoginForm = () => {
 					setAuth(response.data);
 					setMessage('');
 					setOpenAuthForm(false);
-					toast.success({ message: response.message });
+					toast.success(response.message);
 				} else {
 					setMessage(response.message);
 				}

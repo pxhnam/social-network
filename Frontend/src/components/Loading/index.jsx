@@ -1,15 +1,15 @@
 import classNames from 'classnames/bind';
 import axios from 'axios';
 import ReactDOM from 'react-dom';
-import { useContext, useState } from 'react';
-import { AuthContext } from '~/context/AuthProvider';
+import { useState } from 'react';
+import { useAuth } from '~/context/AuthProvider';
 
 import styles from './loading.module.scss';
 
 const cx = classNames.bind(styles);
 
 const Loading = () => {
-	const { setAuth, setOpenAuthForm } = useContext(AuthContext);
+	const { setAuth, setOpenAuthForm } = useAuth();
 	const [loading, setLoading] = useState(false);
 
 	axios.interceptors.request.use(

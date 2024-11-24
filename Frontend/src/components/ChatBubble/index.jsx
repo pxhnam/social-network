@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import classNames from 'classnames/bind';
 import styles from './styles.module.scss';
@@ -6,14 +6,14 @@ import { ChatBubbleIcon, ChevronDownIcon } from '~/components/Icons';
 import WelcomeChat from './WelcomeChat';
 import Conversation from './Conversation';
 import SidebarChat from './SidebarChat';
-import { ChatContext } from '~/context/ChatProvider';
-import { AuthContext } from '~/context/AuthProvider';
+import { useChat } from '~/context/ChatProvider';
+import { useAuth } from '~/context/AuthProvider';
 
 const cx = classNames.bind(styles);
 
 const ChatBubble = () => {
-	const { auth } = useContext(AuthContext);
-	const { chat, isOpenChat, setOpenChat } = useContext(ChatContext);
+	const { auth } = useAuth();
+	const { chat, isOpenChat, setOpenChat } = useChat();
 	const [isHovered, setHovered] = useState(false);
 
 	useEffect(() => {

@@ -1,6 +1,6 @@
-import { useCallback, useContext, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import classNames from 'classnames/bind';
-import { ChatContext } from '~/context/ChatProvider';
+import { useChat } from '~/context/ChatProvider';
 import Message from './Message';
 import styles from './styles.module.scss';
 import {
@@ -14,7 +14,7 @@ import {
 const cx = classNames.bind(styles);
 
 const Conversation = () => {
-	const { chat, messages, handleSendMessgae } = useContext(ChatContext);
+	const { chat, messages, handleSendMessgae } = useChat();
 	const [files, setFiles] = useState([]);
 	const [text, setText] = useState('');
 	const msgEndRef = useRef(null);

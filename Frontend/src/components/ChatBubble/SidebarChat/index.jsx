@@ -1,15 +1,15 @@
-import { useCallback, useContext, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
 import styles from './styles.module.scss';
 import UserChat from '../UserChat';
-import { ChatContext } from '~/context/ChatProvider';
+import { useChat } from '~/context/ChatProvider';
 import SearchChat from './SearchChat';
 import { debounce } from '~/utils/debounce';
 
 const cx = classNames.bind(styles);
 
 const SidebarChat = () => {
-	const { chat, setChat, chatList } = useContext(ChatContext);
+	const { chat, setChat, chatList } = useChat();
 	const [list, setList] = useState();
 
 	useEffect(() => {

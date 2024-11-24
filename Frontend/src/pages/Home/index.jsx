@@ -1,9 +1,9 @@
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import classNames from 'classnames/bind';
 import styles from './styles.module.scss';
 import Post from '~/components/Post';
-import { AuthContext } from '~/context/AuthProvider';
+import { useAuth } from '~/context/AuthProvider';
 import CreatePost from '~/components/CreatePost';
 import postService from '~/services/PostService';
 import { Row, Col } from '~/components/Grid';
@@ -12,7 +12,7 @@ const cx = classNames.bind(styles);
 
 const HomePage = () => {
 	const LIMIT = 10;
-	const { auth, socket } = useContext(AuthContext);
+	const { auth } = useAuth();
 	const [loading, setLoading] = useState(false);
 	const [posts, setPosts] = useState([]);
 	const { ref, inView } = useInView();

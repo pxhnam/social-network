@@ -1,12 +1,16 @@
-import { act, createContext, useContext, useEffect, useState } from 'react';
-import { AuthContext } from './AuthProvider';
+import { createContext, useContext, useEffect, useState } from 'react';
+import { useAuth } from './AuthProvider';
 import chatService from '~/services/ChatService';
 import messageService from '~/services/MessageService';
 
 export const ChatContext = createContext();
 
+export const useChat = () => {
+	return useContext(ChatContext);
+};
+
 const ChatProvider = ({ children }) => {
-	const { auth, socket, onlineUsers } = useContext(AuthContext);
+	const { auth, socket, onlineUsers } = useAuth();
 	const [chat, setChat] = useState(null);
 	const [isOpenChat, setOpenChat] = useState(false);
 	const [chatList, setChatList] = useState([]);

@@ -1,5 +1,4 @@
-import toast from '~/components/custom-toast';
-import Toast from '~/components/custom-toast/Toast';
+import { toast } from '~/components/ToastContainer';
 import { Col, Row } from '~/components/Grid';
 
 const AboutPage = () => {
@@ -13,7 +12,7 @@ const AboutPage = () => {
 			<Col>
 				<button
 					onClick={() => {
-						toast.success({ message: 'Hoàn thành đăng ký' });
+						toast.success('Success!', 'Your action was successful.', 3000);
 					}}
 				>
 					Success

@@ -1,7 +1,7 @@
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import ReactDOM from 'react-dom';
 import classNames from 'classnames/bind';
-import { AuthContext } from '~/context/AuthProvider';
+import { useAuth } from '~/context/AuthProvider';
 import styles from './styles.module.scss';
 import { LoginForm, RegisterForm } from '..';
 import { CloseIcon } from '~/components/Icons';
@@ -9,7 +9,7 @@ import { CloseIcon } from '~/components/Icons';
 const cx = classNames.bind(styles);
 
 const AuthForm = () => {
-	const { auth, isOpen, setOpenAuthForm } = useContext(AuthContext);
+	const { auth, isOpen, setOpenAuthForm } = useAuth();
 	const [isOverlayClick, setOverlayClick] = useState(false);
 	const [isActive, setIsActive] = useState(false);
 
